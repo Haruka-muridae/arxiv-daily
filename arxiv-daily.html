@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>arXiv Daily</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --surface: #111111;
+    --surface2: #161616;
+    --border: #2e2e2e;
+    --text: #ffffff;
+    --tag-bg: #1a1a1a;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  /* ── ヘッダー ── */
+  header {
+    border-bottom: 1px solid var(--border);
+    padding: 28px 40px 20px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 34px;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+  }
+
+  .logo span { font-style: italic; }
+
+  .tagline {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.4;
+  }
+
+  /* ── API Key バー ── */
+  .apikey-bar {
+    padding: 10px 40px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    background: var(--surface2);
+  }
+
+  .apikey-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.4;
+    white-space: nowrap;
+  }
+
+  input[type="password"] {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: #fff;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    padding: 6px 12px;
+    outline: none;
+    border-radius: 2px;
+    width: 280px;
+    transition: border-color 0.2s;
+  }
+
+  input[type="password"]:focus { border-color: #fff; }
+
+  /* ── コントロール ── */
+  .controls {
+    padding: 16px 40px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    align-items: flex-end;
+  }
+
+  .ctrl-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.4;
+  }
+
+  input[type="text"], select {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: #fff;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    padding: 7px 12px;
+    outline: none;
+    border-radius: 2px;
+    transition: border-color 0.2s;
+  }
+
+  input[type="text"]:focus, select:focus { border-color: #fff; }
+  input[type="text"] { width: 200px; }
+  select { cursor: pointer; min-width: 100px; }
+
+  /* ── カテゴリチップ ── */
+  .cat-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    align-items: center;
+  }
+
+  .chip {
+    background: var(--tag-bg);
+    border: 1px solid var(--border);
+    color: #ffffff;
+    font-family: 'DM Mono', monospace;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: all 0.15s;
+    border-radius: 2px;
+    user-select: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1px;
+  }
+
+  .chip-code { font-size: 9px; opacity: 0.4; letter-spacing: 0.04em; }
+  .chip-label { font-size: 11px; }
+
+  .chip.active { background: #fff; border-color: #fff; color: #0a0a0a; }
+  .chip.active .chip-code { opacity: 0.35; }
+  .chip:hover:not(.active) { border-color: #fff; }
+
+  /* ── ボタン ── */
+  .btn-white {
+    background: #fff;
+    border: none;
+    color: #0a0a0a;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    padding: 8px 22px;
+    cursor: pointer;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: opacity 0.2s;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+
+  .btn-white:hover { opacity: 0.8; }
+  .btn-white:disabled { opacity: 0.3; cursor: not-allowed; }
+
+  .btn-outline {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: #fff;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    padding: 5px 12px;
+    cursor: pointer;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    transition: all 0.15s;
+    border-radius: 2px;
+  }
+
+  .btn-outline:hover { background: #fff; color: #0a0a0a; border-color: #fff; }
+  .btn-outline:disabled { opacity: 0.3; cursor: not-allowed; }
+
+  /* ── ステータスバー ── */
+  .status-bar {
+    padding: 10px 40px;
+    border-bottom: 1px solid var(--border);
+    font-size: 11px;
+    min-height: 38px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    opacity: 0.6;
+  }
+
+  .spinner {
+    display: inline-block;
+    width: 10px; height: 10px;
+    border: 1px solid #444;
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    flex-shrink: 0;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── 論文リスト ── */
+  .papers-list { padding: 20px 40px; display: flex; flex-direction: column; }
+
+  .paper-item {
+    border-bottom: 1px solid var(--border);
+    padding: 18px 0;
+    display: grid;
+    gap: 7px;
+    opacity: 0;
+    animation: fadeIn 0.3s ease forwards;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .paper-meta { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+
+  .paper-id { font-size: 10px; opacity: 0.35; letter-spacing: 0.04em; }
+
+  .paper-date { font-size: 10px; opacity: 0.35; }
+
+  .cat-tag {
+    font-size: 10px;
+    padding: 1px 6px;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    opacity: 0.6;
+  }
+
+  .paper-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 19px;
+    font-weight: 300;
+    line-height: 1.3;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+
+  .paper-title:hover { opacity: 0.6; }
+
+  .paper-authors { font-size: 11px; opacity: 0.45; }
+
+  .paper-links { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+
+  .paper-link {
+    color: #fff;
+    text-decoration: none;
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    opacity: 0.35;
+    transition: opacity 0.15s;
+  }
+
+  .paper-link:hover { opacity: 1; }
+
+  .empty-state { padding: 60px 40px; text-align: center; opacity: 0.3; }
+  .empty-state .big {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 48px;
+    font-weight: 300;
+    display: block;
+    margin-bottom: 12px;
+  }
+
+  .error-msg { color: #ff7070; }
+
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 14px 40px;
+    font-size: 10px;
+    opacity: 0.25;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  /* ── モーダル ── */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.88);
+    z-index: 100;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 40px 20px;
+    overflow-y: auto;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+  }
+
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    width: 100%;
+    max-width: 760px;
+    border-radius: 4px;
+    overflow: hidden;
+    transform: translateY(12px);
+    transition: transform 0.22s;
+  }
+
+  .modal-overlay.open .modal { transform: translateY(0); }
+
+  .modal-header {
+    padding: 24px 30px 18px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .modal-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 300;
+    line-height: 1.35;
+    flex: 1;
+  }
+
+  .modal-close {
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+    opacity: 0.3;
+    padding: 2px 4px;
+    line-height: 1;
+    transition: opacity 0.15s;
+    flex-shrink: 0;
+  }
+
+  .modal-close:hover { opacity: 1; }
+
+  .modal-meta {
+    padding: 10px 30px;
+    border-bottom: 1px solid var(--border);
+    font-size: 11px;
+    opacity: 0.4;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+
+  .modal-body { padding: 22px 30px; display: flex; flex-direction: column; gap: 20px; }
+
+  .section-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.35;
+    margin-bottom: 8px;
+  }
+
+  .modal-abstract { font-size: 13px; line-height: 1.85; opacity: 0.8; }
+
+  .ai-box {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 18px;
+  }
+
+  .ai-box-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+
+  .ai-badge { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.35; }
+
+  .ai-content { font-size: 13px; line-height: 1.85; min-height: 36px; }
+  .ai-content.running { opacity: 0.4; }
+
+  .ai-section-head {
+    display: block;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    opacity: 0.4;
+    margin-top: 14px;
+    margin-bottom: 5px;
+    border-left: 2px solid var(--border);
+    padding-left: 8px;
+  }
+
+  .ai-section-head:first-child { margin-top: 0; }
+
+  .modal-footer-links { display: flex; gap: 10px; flex-wrap: wrap; }
+
+  .modal-link {
+    color: #fff;
+    text-decoration: none;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border: 1px solid var(--border);
+    padding: 6px 16px;
+    border-radius: 2px;
+    transition: all 0.15s;
+  }
+
+  .modal-link:hover { background: #fff; color: #0a0a0a; }
+
+  @media (max-width: 600px) {
+    header, .controls, .papers-list, .status-bar, footer, .apikey-bar { padding-left: 20px; padding-right: 20px; }
+    .logo { font-size: 28px; }
+    input[type="text"] { width: 140px; }
+    input[type="password"] { width: 200px; }
+    .modal-header, .modal-body, .modal-meta { padding-left: 20px; padding-right: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <div class="logo">arXiv <span>Daily</span></div>
+    <div class="tagline">最新論文ビューア — Powered by arXiv API</div>
+  </div>
+</header>
+
+<!-- Claude API Key -->
+<div class="apikey-bar">
+  <span class="apikey-label">Claude API Key</span>
+  <input type="password" id="apiKeyInput" placeholder="sk-ant-api03-..." autocomplete="off">
+  <button class="btn-outline" onclick="saveApiKey()">保存</button>
+  <span id="apiKeyStatus" style="font-size:11px; opacity:0.35;">未設定 — AI機能（翻訳・要点まとめ）を使うには入力してください</span>
+</div>
+
+<!-- コントロール -->
+<div class="controls">
+
+  <div class="ctrl-group">
+    <label>カテゴリ（複数選択可）</label>
+    <div class="cat-chips" id="catChips">
+      <div class="chip active" data-cat="cs.AI"><span class="chip-code">cs.AI</span><span class="chip-label">人工知能</span></div>
+      <div class="chip active" data-cat="cs.LG"><span class="chip-code">cs.LG</span><span class="chip-label">機械学習</span></div>
+      <div class="chip active" data-cat="cs.CL"><span class="chip-code">cs.CL</span><span class="chip-label">自然言語処理</span></div>
+      <div class="chip active" data-cat="cs.CV"><span class="chip-code">cs.CV</span><span class="chip-label">コンピュータビジョン</span></div>
+      <div class="chip active" data-cat="cs.RO"><span class="chip-code">cs.RO</span><span class="chip-label">ロボティクス</span></div>
+      <div class="chip active" data-cat="cs.NE"><span class="chip-code">cs.NE</span><span class="chip-label">ニューラルネット</span></div>
+      <div class="chip active" data-cat="math.ST"><span class="chip-code">math.ST</span><span class="chip-label">統計学</span></div>
+      <div class="chip active" data-cat="math.OC"><span class="chip-code">math.OC</span><span class="chip-label">最適化・制御</span></div>
+      <div class="chip active" data-cat="physics.data-an"><span class="chip-code">physics</span><span class="chip-label">物理学</span></div>
+      <div class="chip active" data-cat="quant-ph"><span class="chip-code">quant-ph</span><span class="chip-label">量子物理学</span></div>
+      <div class="chip active" data-cat="stat.ML"><span class="chip-code">stat.ML</span><span class="chip-label">統計的ML</span></div>
+    </div>
+  </div>
+
+  <div class="ctrl-group">
+    <label>キーワード（任意）</label>
+    <input type="text" id="keyword" placeholder="例: transformer, diffusion">
+  </div>
+
+  <div class="ctrl-group">
+    <label>取得件数</label>
+    <select id="maxResults">
+      <option value="10">10件</option>
+      <option value="25" selected>25件</option>
+      <option value="50">50件</option>
+    </select>
+  </div>
+
+  <button class="btn-white" id="fetchBtn" onclick="fetchPapers()">最新を取得</button>
+
+</div>
+
+<div class="status-bar" id="statusBar">
+  <span>カテゴリを選択して「最新を取得」を押してください</span>
+</div>
+
+<div class="papers-list" id="papersList">
+  <div class="empty-state">
+    <span class="big">∅</span>
+    <span>論文がまだ読み込まれていません</span>
+  </div>
+</div>
+
+<footer>
+  <span>Data: arXiv.org API</span>
+  <span>Proxy: corsproxy.io</span>
+  <span>AI: Claude API (Anthropic)</span>
+</footer>
+
+<!-- 論文詳細モーダル -->
+<div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="modalTitle"></div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-meta" id="modalMeta"></div>
+    <div class="modal-body">
+
+      <div>
+        <div class="section-label">Abstract（原文・英語）</div>
+        <div class="modal-abstract" id="modalAbstract"></div>
+      </div>
+
+      <div class="ai-box">
+        <div class="ai-box-header">
+          <span class="ai-badge">🇯🇵 日本語翻訳 — Claude AI</span>
+          <button class="btn-white" id="translateBtn" onclick="runTranslate()" style="font-size:11px;padding:5px 14px;">翻訳する</button>
+        </div>
+        <div class="ai-content" id="translateContent">
+          <span style="opacity:0.3;">「翻訳する」を押すとClaude AIがアブストラクトを日本語に翻訳します</span>
+        </div>
+      </div>
+
+      <div class="ai-box">
+        <div class="ai-box-header">
+          <span class="ai-badge">📝 要点まとめ — Claude AI</span>
+          <button class="btn-white" id="summaryBtn" onclick="runSummary()" style="font-size:11px;padding:5px 14px;">要点を整理</button>
+        </div>
+        <div class="ai-content" id="summaryContent">
+          <span style="opacity:0.3;">「要点を整理」を押すとClaude AIが論文の要点を3つの観点で整理します</span>
+        </div>
+      </div>
+
+      <div class="modal-footer-links">
+        <a class="modal-link" id="modalAbsLink" href="#" target="_blank">arXiv ページ ↗</a>
+        <a class="modal-link" id="modalPdfLink" href="#" target="_blank">PDF ↗</a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  // ── カテゴリチップ ──
+  document.querySelectorAll('.chip').forEach(c =>
+    c.addEventListener('click', () => c.classList.toggle('active'))
+  );
+
+  function getActiveCats() {
+    return [...document.querySelectorAll('.chip.active')].map(c => c.dataset.cat);
+  }
+
+  // ── API Key ──
+  let claudeApiKey = sessionStorage.getItem('claudeApiKey') || '';
+  if (claudeApiKey) {
+    document.getElementById('apiKeyStatus').textContent = '✓ 設定済み（このセッション中のみ保持）';
+  }
+
+  function saveApiKey() {
+    const val = document.getElementById('apiKeyInput').value.trim();
+    if (!val) { alert('APIキーを入力してください'); return; }
+    claudeApiKey = val;
+    sessionStorage.setItem('claudeApiKey', val);
+    document.getElementById('apiKeyInput').value = '';
+    document.getElementById('apiKeyStatus').textContent = '✓ 設定済み（このセッション中のみ保持）';
+  }
+
+  // ── arXiv 取得（日付なし・カテゴリOR検索・最新順）──
+  async function fetchPapers() {
+    const cats = getActiveCats();
+    const keyword = document.getElementById('keyword').value.trim();
+    const max = document.getElementById('maxResults').value;
+
+    if (!cats.length && !keyword) {
+      alert('カテゴリかキーワードを少なくとも1つ選択してください');
+      return;
+    }
+
+    const btn = document.getElementById('fetchBtn');
+    const statusBar = document.getElementById('statusBar');
+    const list = document.getElementById('papersList');
+
+    btn.disabled = true;
+    statusBar.innerHTML = '<span class="spinner"></span>&nbsp; 最新論文を取得中...';
+    list.innerHTML = '';
+
+    // クエリ構築：カテゴリOR + キーワード（日付指定なし）
+    const parts = [];
+    if (cats.length) {
+      parts.push(cats.map(c => `cat:${c}`).join('+OR+'));
+    }
+    if (keyword) {
+      parts.push(`(ti:${keyword}+OR+abs:${keyword})`);
+    }
+    const searchQuery = parts.join('+AND+');
+
+    const arxivUrl = `https://export.arxiv.org/api/query?search_query=${searchQuery}&start=0&max_results=${max}&sortBy=submittedDate&sortOrder=descending`;
+    const proxyUrl = `https://corsproxy.io/?url=${encodeURIComponent(arxivUrl)}`;
+
+    try {
+      const res = await fetch(proxyUrl);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const text = await res.text();
+      const xml = new DOMParser().parseFromString(text, 'application/xml');
+      const entries = [...xml.querySelectorAll('entry')];
+
+      if (!entries.length) {
+        statusBar.innerHTML = '論文が見つかりませんでした。カテゴリやキーワードを変えてお試しください。';
+        list.innerHTML = `<div class="empty-state"><span class="big">∅</span><span>該当なし</span></div>`;
+        btn.disabled = false;
+        return;
+      }
+
+      statusBar.innerHTML = `<strong>${entries.length}件</strong>&nbsp; 取得完了 &nbsp;·&nbsp; ${new Date().toLocaleString('ja-JP')}`;
+
+      entries.forEach((entry, i) => {
+        const rawId = (entry.querySelector('id')?.textContent || '').trim();
+        const shortId = rawId.replace('http://arxiv.org/abs/', '').replace('https://arxiv.org/abs/', '');
+        const title = (entry.querySelector('title')?.textContent || '').trim().replace(/\s+/g, ' ');
+        const summary = (entry.querySelector('summary')?.textContent || '').trim().replace(/\s+/g, ' ');
+        const authors = [...entry.querySelectorAll('author name')].map(a => a.textContent.trim()).join(', ');
+        const cats2 = [...entry.querySelectorAll('category')].map(c => c.getAttribute('term'));
+        const published = (entry.querySelector('published')?.textContent || '').trim().slice(0, 10);
+
+        const paper = { shortId, title, summary, authors, categories: cats2, published };
+        const encoded = encodeURIComponent(JSON.stringify(paper));
+
+        const div = document.createElement('div');
+        div.className = 'paper-item';
+        div.style.animationDelay = `${i * 20}ms`;
+        div.innerHTML = `
+          <div class="paper-meta">
+            <span class="paper-id">${shortId}</span>
+            <span class="paper-date">${published}</span>
+            <div>${cats2.slice(0,3).map(c => `<span class="cat-tag">${c}</span>`).join(' ')}</div>
+          </div>
+          <div class="paper-title" onclick="openModal('${encoded}')">${title}</div>
+          <div class="paper-authors">${authors || '著者情報なし'}</div>
+          <div class="paper-links">
+            <a class="paper-link" href="https://arxiv.org/abs/${shortId}" target="_blank">Abstract ↗</a>
+            <a class="paper-link" href="https://arxiv.org/pdf/${shortId}" target="_blank">PDF ↗</a>
+            <button class="btn-outline" onclick="openModal('${encoded}')">詳細・AI解析 →</button>
+          </div>
+        `;
+        list.appendChild(div);
+      });
+
+    } catch (e) {
+      statusBar.innerHTML = `<span class="error-msg">エラー: ${e.message}</span>`;
+      list.innerHTML = `<div class="empty-state"><span class="big">!</span><span>取得に失敗しました。ネットワーク環境をご確認ください。</span></div>`;
+    }
+
+    btn.disabled = false;
+  }
+
+  // ── モーダル ──
+  let currentPaper = null;
+
+  function openModal(encoded) {
+    currentPaper = JSON.parse(decodeURIComponent(encoded));
+    const p = currentPaper;
+
+    document.getElementById('modalTitle').textContent = p.title;
+    document.getElementById('modalMeta').innerHTML = `
+      <span>${p.shortId}</span>
+      <span>${p.published}</span>
+      <span>${p.authors}</span>
+      <span>${p.categories.join(' · ')}</span>
+    `;
+    document.getElementById('modalAbstract').textContent = p.summary;
+    document.getElementById('modalAbsLink').href = `https://arxiv.org/abs/${p.shortId}`;
+    document.getElementById('modalPdfLink').href = `https://arxiv.org/pdf/${p.shortId}`;
+
+    document.getElementById('translateContent').innerHTML = '<span style="opacity:0.3;">「翻訳する」を押すとClaude AIがアブストラクトを日本語に翻訳します</span>';
+    document.getElementById('summaryContent').innerHTML = '<span style="opacity:0.3;">「要点を整理」を押すとClaude AIが論文の要点を3つの観点で整理します</span>';
+    document.getElementById('translateBtn').disabled = false;
+    document.getElementById('summaryBtn').disabled = false;
+
+    document.getElementById('modalOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function handleOverlayClick(e) {
+    if (e.target === document.getElementById('modalOverlay')) closeModal();
+  }
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+  // ── Claude API ──
+  async function callClaude(prompt) {
+    if (!claudeApiKey) {
+      alert('Claude APIキーが未設定です。\n画面上部の入力欄にAPIキーを入力・保存してください。');
+      throw new Error('no-api-key');
+    }
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': claudeApiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true',
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error?.message || `HTTP ${res.status}`);
+    }
+    const data = await res.json();
+    return data.content.map(b => b.text || '').join('');
+  }
+
+  async function runTranslate() {
+    if (!currentPaper) return;
+    const btn = document.getElementById('translateBtn');
+    const box = document.getElementById('translateContent');
+    btn.disabled = true;
+    box.className = 'ai-content running';
+    box.innerHTML = '<span class="spinner"></span>&nbsp; 翻訳中...';
+    try {
+      const result = await callClaude(
+        `以下の英語の論文アブストラクトを、学術的に正確な日本語に翻訳してください。専門用語は適切に訳し、読みやすい文体にしてください。翻訳文のみを出力してください（前置きや説明は不要です）。\n\n${currentPaper.summary}`
+      );
+      box.className = 'ai-content';
+      box.textContent = result;
+    } catch (e) {
+      box.className = 'ai-content';
+      box.innerHTML = e.message === 'no-api-key'
+        ? '<span style="opacity:0.3;">APIキーを設定してください</span>'
+        : `<span class="error-msg">エラー: ${e.message}</span>`;
+      btn.disabled = false;
+    }
+  }
+
+  async function runSummary() {
+    if (!currentPaper) return;
+    const btn = document.getElementById('summaryBtn');
+    const box = document.getElementById('summaryContent');
+    btn.disabled = true;
+    box.className = 'ai-content running';
+    box.innerHTML = '<span class="spinner"></span>&nbsp; 要点を整理中...';
+    try {
+      const result = await callClaude(
+        `以下の論文について、日本語で要点を整理してください。\n\n【タイトル】${currentPaper.title}\n【アブストラクト】${currentPaper.summary}\n\n以下の3つの観点で、それぞれ2〜3文で簡潔にまとめてください。出力は以下の形式のみ（前置き不要）：\n\n■ この研究が解決しようとしている問題\n（ここに記述）\n\n■ 提案手法・アプローチ\n（ここに記述）\n\n■ 主な成果・貢献\n（ここに記述）`
+      );
+      box.className = 'ai-content';
+      let html = '';
+      result.split('\n').forEach(line => {
+        const t = line.trim();
+        if (t.startsWith('■')) html += `<span class="ai-section-head">${t}</span>`;
+        else if (t) html += `<span>${t}</span><br>`;
+      });
+      box.innerHTML = html;
+    } catch (e) {
+      box.className = 'ai-content';
+      box.innerHTML = e.message === 'no-api-key'
+        ? '<span style="opacity:0.3;">APIキーを設定してください</span>'
+        : `<span class="error-msg">エラー: ${e.message}</span>`;
+      btn.disabled = false;
+    }
+  }
+</script>
+</body>
+</html>
