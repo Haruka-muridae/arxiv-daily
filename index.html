@@ -154,6 +154,9 @@
     transition: opacity 0.2s;
     border-radius: 2px;
     white-space: nowrap;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    min-height: 36px;
   }
 
   .btn-white:hover { opacity: 0.8; }
@@ -165,12 +168,15 @@
     color: #fff;
     font-family: 'DM Mono', monospace;
     font-size: 11px;
-    padding: 4px 11px;
+    padding: 8px 14px;
     cursor: pointer;
     letter-spacing: 0.05em;
     text-transform: uppercase;
     transition: all 0.15s;
     border-radius: 2px;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    min-height: 36px;
   }
 
   .btn-outline:hover { background: #fff; color: #0a0a0a; border-color: #fff; }
@@ -236,6 +242,8 @@
     line-height: 1.3;
     cursor: pointer;
     transition: opacity 0.15s;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
   }
 
   .paper-title:hover { opacity: 0.6; }
@@ -454,101 +462,101 @@
 
   <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
     <span style="font-size:10px; text-transform:uppercase; letter-spacing:0.1em; opacity:0.35;">カテゴリ（クリックでON/OFF）</span>
-    <button class="btn-outline" onclick="toggleAllCats()" id="toggleAllBtn" style="font-size:10px; padding:3px 10px;">すべてOFF</button>
+    <button class="btn-outline" onclick="toggleAllCats()" id="toggleAllBtn" style="font-size:10px; padding:3px 10px;">すべてON</button>
   </div>
 
   <div class="cat-group">
     <span class="cat-group-label">AI / CS</span>
     <div class="cat-chips">
-      <div class="chip active" data-cat="cs.AI" data-source="arxiv"><span class="chip-code">cs.AI</span><span class="chip-label">人工知能</span></div>
-      <div class="chip active" data-cat="cs.LG" data-source="arxiv"><span class="chip-code">cs.LG</span><span class="chip-label">機械学習</span></div>
-      <div class="chip active" data-cat="cs.CL" data-source="arxiv"><span class="chip-code">cs.CL</span><span class="chip-label">自然言語処理</span></div>
-      <div class="chip active" data-cat="cs.CV" data-source="arxiv"><span class="chip-code">cs.CV</span><span class="chip-label">コンピュータビジョン</span></div>
-      <div class="chip active" data-cat="cs.RO" data-source="arxiv"><span class="chip-code">cs.RO</span><span class="chip-label">ロボティクス</span></div>
-      <div class="chip active" data-cat="cs.NE" data-source="arxiv"><span class="chip-code">cs.NE</span><span class="chip-label">ニューラルネット</span></div>
-      <div class="chip active" data-cat="cs.CR" data-source="arxiv"><span class="chip-code">cs.CR</span><span class="chip-label">セキュリティ</span></div>
-      <div class="chip active" data-cat="cs.DC" data-source="arxiv"><span class="chip-code">cs.DC</span><span class="chip-label">分散計算</span></div>
-      <div class="chip active" data-cat="cs.DB" data-source="arxiv"><span class="chip-code">cs.DB</span><span class="chip-label">データベース</span></div>
-      <div class="chip active" data-cat="cs.HC" data-source="arxiv"><span class="chip-code">cs.HC</span><span class="chip-label">HCI</span></div>
-      <div class="chip active" data-cat="cs.IR" data-source="arxiv"><span class="chip-code">cs.IR</span><span class="chip-label">情報検索</span></div>
-      <div class="chip active" data-cat="cs.SE" data-source="arxiv"><span class="chip-code">cs.SE</span><span class="chip-label">ソフトウェア工学</span></div>
-      <div class="chip active" data-cat="cs.SY" data-source="arxiv"><span class="chip-code">cs.SY</span><span class="chip-label">システム制御</span></div>
-      <div class="chip active" data-cat="cs.GT" data-source="arxiv"><span class="chip-code">cs.GT</span><span class="chip-label">ゲーム理論</span></div>
-      <div class="chip active" data-cat="cs.MA" data-source="arxiv"><span class="chip-code">cs.MA</span><span class="chip-label">マルチエージェント</span></div>
-      <div class="chip active" data-cat="cs.CY" data-source="arxiv"><span class="chip-code">cs.CY</span><span class="chip-label">社会・倫理</span></div>
-      <div class="chip active" data-cat="cs.PL" data-source="arxiv"><span class="chip-code">cs.PL</span><span class="chip-label">プログラミング言語</span></div>
-      <div class="chip active" data-cat="cs.AR" data-source="arxiv"><span class="chip-code">cs.AR</span><span class="chip-label">ハードウェア</span></div>
-      <div class="chip active" data-cat="cs.GR" data-source="arxiv"><span class="chip-code">cs.GR</span><span class="chip-label">グラフィクス</span></div>
-      <div class="chip active" data-cat="cs.MM" data-source="arxiv"><span class="chip-code">cs.MM</span><span class="chip-label">マルチメディア</span></div>
+      <div class="chip" data-cat="cs.AI" data-source="arxiv"><span class="chip-code">cs.AI</span><span class="chip-label">人工知能</span></div>
+      <div class="chip" data-cat="cs.LG" data-source="arxiv"><span class="chip-code">cs.LG</span><span class="chip-label">機械学習</span></div>
+      <div class="chip" data-cat="cs.CL" data-source="arxiv"><span class="chip-code">cs.CL</span><span class="chip-label">自然言語処理</span></div>
+      <div class="chip" data-cat="cs.CV" data-source="arxiv"><span class="chip-code">cs.CV</span><span class="chip-label">コンピュータビジョン</span></div>
+      <div class="chip" data-cat="cs.RO" data-source="arxiv"><span class="chip-code">cs.RO</span><span class="chip-label">ロボティクス</span></div>
+      <div class="chip" data-cat="cs.NE" data-source="arxiv"><span class="chip-code">cs.NE</span><span class="chip-label">ニューラルネット</span></div>
+      <div class="chip" data-cat="cs.CR" data-source="arxiv"><span class="chip-code">cs.CR</span><span class="chip-label">セキュリティ</span></div>
+      <div class="chip" data-cat="cs.DC" data-source="arxiv"><span class="chip-code">cs.DC</span><span class="chip-label">分散計算</span></div>
+      <div class="chip" data-cat="cs.DB" data-source="arxiv"><span class="chip-code">cs.DB</span><span class="chip-label">データベース</span></div>
+      <div class="chip" data-cat="cs.HC" data-source="arxiv"><span class="chip-code">cs.HC</span><span class="chip-label">HCI</span></div>
+      <div class="chip" data-cat="cs.IR" data-source="arxiv"><span class="chip-code">cs.IR</span><span class="chip-label">情報検索</span></div>
+      <div class="chip" data-cat="cs.SE" data-source="arxiv"><span class="chip-code">cs.SE</span><span class="chip-label">ソフトウェア工学</span></div>
+      <div class="chip" data-cat="cs.SY" data-source="arxiv"><span class="chip-code">cs.SY</span><span class="chip-label">システム制御</span></div>
+      <div class="chip" data-cat="cs.GT" data-source="arxiv"><span class="chip-code">cs.GT</span><span class="chip-label">ゲーム理論</span></div>
+      <div class="chip" data-cat="cs.MA" data-source="arxiv"><span class="chip-code">cs.MA</span><span class="chip-label">マルチエージェント</span></div>
+      <div class="chip" data-cat="cs.CY" data-source="arxiv"><span class="chip-code">cs.CY</span><span class="chip-label">社会・倫理</span></div>
+      <div class="chip" data-cat="cs.PL" data-source="arxiv"><span class="chip-code">cs.PL</span><span class="chip-label">プログラミング言語</span></div>
+      <div class="chip" data-cat="cs.AR" data-source="arxiv"><span class="chip-code">cs.AR</span><span class="chip-label">ハードウェア</span></div>
+      <div class="chip" data-cat="cs.GR" data-source="arxiv"><span class="chip-code">cs.GR</span><span class="chip-label">グラフィクス</span></div>
+      <div class="chip" data-cat="cs.MM" data-source="arxiv"><span class="chip-code">cs.MM</span><span class="chip-label">マルチメディア</span></div>
     </div>
   </div>
 
   <div class="cat-group">
     <span class="cat-group-label">数学</span>
     <div class="cat-chips">
-      <div class="chip active" data-cat="math.ST" data-source="arxiv"><span class="chip-code">math.ST</span><span class="chip-label">統計学</span></div>
-      <div class="chip active" data-cat="math.OC" data-source="arxiv"><span class="chip-code">math.OC</span><span class="chip-label">最適化・制御</span></div>
-      <div class="chip active" data-cat="math.PR" data-source="arxiv"><span class="chip-code">math.PR</span><span class="chip-label">確率論</span></div>
-      <div class="chip active" data-cat="math.NA" data-source="arxiv"><span class="chip-code">math.NA</span><span class="chip-label">数値解析</span></div>
-      <div class="chip active" data-cat="math.LO" data-source="arxiv"><span class="chip-code">math.LO</span><span class="chip-label">数理論理学</span></div>
-      <div class="chip active" data-cat="math.CO" data-source="arxiv"><span class="chip-code">math.CO</span><span class="chip-label">組み合わせ論</span></div>
-      <div class="chip active" data-cat="math.IT" data-source="arxiv"><span class="chip-code">math.IT</span><span class="chip-label">情報理論</span></div>
+      <div class="chip" data-cat="math.ST" data-source="arxiv"><span class="chip-code">math.ST</span><span class="chip-label">統計学</span></div>
+      <div class="chip" data-cat="math.OC" data-source="arxiv"><span class="chip-code">math.OC</span><span class="chip-label">最適化・制御</span></div>
+      <div class="chip" data-cat="math.PR" data-source="arxiv"><span class="chip-code">math.PR</span><span class="chip-label">確率論</span></div>
+      <div class="chip" data-cat="math.NA" data-source="arxiv"><span class="chip-code">math.NA</span><span class="chip-label">数値解析</span></div>
+      <div class="chip" data-cat="math.LO" data-source="arxiv"><span class="chip-code">math.LO</span><span class="chip-label">数理論理学</span></div>
+      <div class="chip" data-cat="math.CO" data-source="arxiv"><span class="chip-code">math.CO</span><span class="chip-label">組み合わせ論</span></div>
+      <div class="chip" data-cat="math.IT" data-source="arxiv"><span class="chip-code">math.IT</span><span class="chip-label">情報理論</span></div>
     </div>
   </div>
 
   <div class="cat-group">
     <span class="cat-group-label">物理・宇宙</span>
     <div class="cat-chips">
-      <div class="chip active" data-cat="quant-ph" data-source="arxiv"><span class="chip-code">quant-ph</span><span class="chip-label">量子物理学</span></div>
-      <div class="chip active" data-cat="physics.data-an" data-source="arxiv"><span class="chip-code">physics</span><span class="chip-label">物理学全般</span></div>
-      <div class="chip active" data-cat="astro-ph.GA" data-source="arxiv"><span class="chip-code">astro-ph.GA</span><span class="chip-label">銀河天文学</span></div>
-      <div class="chip active" data-cat="astro-ph.CO" data-source="arxiv"><span class="chip-code">astro-ph.CO</span><span class="chip-label">宇宙論</span></div>
-      <div class="chip active" data-cat="astro-ph.EP" data-source="arxiv"><span class="chip-code">astro-ph.EP</span><span class="chip-label">惑星科学</span></div>
-      <div class="chip active" data-cat="gr-qc" data-source="arxiv"><span class="chip-code">gr-qc</span><span class="chip-label">相対性理論</span></div>
-      <div class="chip active" data-cat="hep-th" data-source="arxiv"><span class="chip-code">hep-th</span><span class="chip-label">素粒子論</span></div>
-      <div class="chip active" data-cat="cond-mat.mtrl-sci" data-source="arxiv"><span class="chip-code">cond-mat</span><span class="chip-label">材料科学</span></div>
+      <div class="chip" data-cat="quant-ph" data-source="arxiv"><span class="chip-code">quant-ph</span><span class="chip-label">量子物理学</span></div>
+      <div class="chip" data-cat="physics.data-an" data-source="arxiv"><span class="chip-code">physics</span><span class="chip-label">物理学全般</span></div>
+      <div class="chip" data-cat="astro-ph.GA" data-source="arxiv"><span class="chip-code">astro-ph.GA</span><span class="chip-label">銀河天文学</span></div>
+      <div class="chip" data-cat="astro-ph.CO" data-source="arxiv"><span class="chip-code">astro-ph.CO</span><span class="chip-label">宇宙論</span></div>
+      <div class="chip" data-cat="astro-ph.EP" data-source="arxiv"><span class="chip-code">astro-ph.EP</span><span class="chip-label">惑星科学</span></div>
+      <div class="chip" data-cat="gr-qc" data-source="arxiv"><span class="chip-code">gr-qc</span><span class="chip-label">相対性理論</span></div>
+      <div class="chip" data-cat="hep-th" data-source="arxiv"><span class="chip-code">hep-th</span><span class="chip-label">素粒子論</span></div>
+      <div class="chip" data-cat="cond-mat.mtrl-sci" data-source="arxiv"><span class="chip-code">cond-mat</span><span class="chip-label">材料科学</span></div>
     </div>
   </div>
 
   <div class="cat-group">
     <span class="cat-group-label">統計・信号</span>
     <div class="cat-chips">
-      <div class="chip active" data-cat="stat.ML" data-source="arxiv"><span class="chip-code">stat.ML</span><span class="chip-label">統計的ML</span></div>
-      <div class="chip active" data-cat="stat.ME" data-source="arxiv"><span class="chip-code">stat.ME</span><span class="chip-label">統計手法</span></div>
-      <div class="chip active" data-cat="stat.AP" data-source="arxiv"><span class="chip-code">stat.AP</span><span class="chip-label">応用統計</span></div>
-      <div class="chip active" data-cat="eess.SP" data-source="arxiv"><span class="chip-code">eess.SP</span><span class="chip-label">信号処理</span></div>
-      <div class="chip active" data-cat="eess.IV" data-source="arxiv"><span class="chip-code">eess.IV</span><span class="chip-label">画像処理</span></div>
-      <div class="chip active" data-cat="eess.AS" data-source="arxiv"><span class="chip-code">eess.AS</span><span class="chip-label">音声処理</span></div>
+      <div class="chip" data-cat="stat.ML" data-source="arxiv"><span class="chip-code">stat.ML</span><span class="chip-label">統計的ML</span></div>
+      <div class="chip" data-cat="stat.ME" data-source="arxiv"><span class="chip-code">stat.ME</span><span class="chip-label">統計手法</span></div>
+      <div class="chip" data-cat="stat.AP" data-source="arxiv"><span class="chip-code">stat.AP</span><span class="chip-label">応用統計</span></div>
+      <div class="chip" data-cat="eess.SP" data-source="arxiv"><span class="chip-code">eess.SP</span><span class="chip-label">信号処理</span></div>
+      <div class="chip" data-cat="eess.IV" data-source="arxiv"><span class="chip-code">eess.IV</span><span class="chip-label">画像処理</span></div>
+      <div class="chip" data-cat="eess.AS" data-source="arxiv"><span class="chip-code">eess.AS</span><span class="chip-label">音声処理</span></div>
     </div>
   </div>
 
   <div class="cat-group">
     <span class="cat-group-label">生物・医学</span>
     <div class="cat-chips">
-      <div class="chip active" data-cat="q-bio.NC" data-source="arxiv"><span class="chip-code">q-bio.NC</span><span class="chip-label">神経科学</span></div>
-      <div class="chip active" data-cat="q-bio.GN" data-source="arxiv"><span class="chip-code">q-bio.GN</span><span class="chip-label">ゲノミクス</span></div>
-      <div class="chip active" data-cat="q-bio.PE" data-source="arxiv"><span class="chip-code">q-bio.PE</span><span class="chip-label">集団・進化</span></div>
-      <div class="chip active" data-cat="q-bio.BM" data-source="arxiv"><span class="chip-code">q-bio.BM</span><span class="chip-label">生体分子</span></div>
-      <div class="chip active" data-cat="q-bio.QM" data-source="arxiv"><span class="chip-code">q-bio.QM</span><span class="chip-label">定量生物学</span></div>
+      <div class="chip" data-cat="q-bio.NC" data-source="arxiv"><span class="chip-code">q-bio.NC</span><span class="chip-label">神経科学</span></div>
+      <div class="chip" data-cat="q-bio.GN" data-source="arxiv"><span class="chip-code">q-bio.GN</span><span class="chip-label">ゲノミクス</span></div>
+      <div class="chip" data-cat="q-bio.PE" data-source="arxiv"><span class="chip-code">q-bio.PE</span><span class="chip-label">集団・進化</span></div>
+      <div class="chip" data-cat="q-bio.BM" data-source="arxiv"><span class="chip-code">q-bio.BM</span><span class="chip-label">生体分子</span></div>
+      <div class="chip" data-cat="q-bio.QM" data-source="arxiv"><span class="chip-code">q-bio.QM</span><span class="chip-label">定量生物学</span></div>
     </div>
   </div>
 
   <div class="cat-group">
     <span class="cat-group-label">経済・金融</span>
     <div class="cat-chips">
-      <div class="chip active" data-cat="econ.GN" data-source="arxiv"><span class="chip-code">econ.GN</span><span class="chip-label">経済学全般</span></div>
-      <div class="chip active" data-cat="econ.EM" data-source="arxiv"><span class="chip-code">econ.EM</span><span class="chip-label">計量経済学</span></div>
-      <div class="chip active" data-cat="q-fin.ST" data-source="arxiv"><span class="chip-code">q-fin.ST</span><span class="chip-label">統計ファイナンス</span></div>
-      <div class="chip active" data-cat="q-fin.PM" data-source="arxiv"><span class="chip-code">q-fin.PM</span><span class="chip-label">ポートフォリオ</span></div>
-      <div class="chip active" data-cat="q-fin.TR" data-source="arxiv"><span class="chip-code">q-fin.TR</span><span class="chip-label">市場・取引</span></div>
-      <div class="chip active" data-cat="q-fin.RM" data-source="arxiv"><span class="chip-code">q-fin.RM</span><span class="chip-label">リスク管理</span></div>
+      <div class="chip" data-cat="econ.GN" data-source="arxiv"><span class="chip-code">econ.GN</span><span class="chip-label">経済学全般</span></div>
+      <div class="chip" data-cat="econ.EM" data-source="arxiv"><span class="chip-code">econ.EM</span><span class="chip-label">計量経済学</span></div>
+      <div class="chip" data-cat="q-fin.ST" data-source="arxiv"><span class="chip-code">q-fin.ST</span><span class="chip-label">統計ファイナンス</span></div>
+      <div class="chip" data-cat="q-fin.PM" data-source="arxiv"><span class="chip-code">q-fin.PM</span><span class="chip-label">ポートフォリオ</span></div>
+      <div class="chip" data-cat="q-fin.TR" data-source="arxiv"><span class="chip-code">q-fin.TR</span><span class="chip-label">市場・取引</span></div>
+      <div class="chip" data-cat="q-fin.RM" data-source="arxiv"><span class="chip-code">q-fin.RM</span><span class="chip-label">リスク管理</span></div>
     </div>
   </div>
 
   <div class="cat-group">
     <span class="cat-group-label">心理・認知</span>
     <div class="cat-chips">
-      <div class="chip psychip active" data-cat="psyarxiv" data-source="psyarxiv"><span class="chip-code">PsyArXiv</span><span class="chip-label">心理学・認知科学</span></div>
+      <div class="chip psychip" data-cat="psyarxiv" data-source="psyarxiv"><span class="chip-code">PsyArXiv</span><span class="chip-label">心理学・認知科学</span></div>
     </div>
   </div>
 
@@ -647,19 +655,19 @@
     c.addEventListener('click', () => c.classList.toggle('active'))
   );
 
-  // ── 全オフ / 全オン トグル ──
-  let allOff = false;
+  // ── 全オン / 全オフ トグル ──
+  let allOff = true; // 初期はON状態なので次はOFF
   function toggleAllCats() {
     const chips = document.querySelectorAll('.chip');
     const btn = document.getElementById('toggleAllBtn');
-    if (!allOff) {
-      chips.forEach(c => c.classList.remove('active'));
-      btn.textContent = 'すべてON';
-      allOff = true;
-    } else {
+    if (allOff) {
       chips.forEach(c => c.classList.add('active'));
       btn.textContent = 'すべてOFF';
       allOff = false;
+    } else {
+      chips.forEach(c => c.classList.remove('active'));
+      btn.textContent = 'すべてON';
+      allOff = true;
     }
   }
 
@@ -711,43 +719,72 @@
     return data?.responseData?.translatedText || keyword;
   }
 
-  // ── arXiv取得 ──
+  // ── arXiv取得（カテゴリが多い場合は分割リクエスト）──
   async function fetchArxiv(arxivCats, keyword, max) {
-    const parts = [];
-    if (arxivCats.length) parts.push(arxivCats.map(c => `cat:${c}`).join('+OR+'));
-    if (keyword) parts.push(`(ti:${keyword}+OR+abs:${keyword})`);
-    if (!parts.length) return [];
+    if (!arxivCats.length && !keyword) return [];
 
-    const q = parts.join('+AND+');
-    const url = `https://export.arxiv.org/api/query?search_query=${q}&start=0&max_results=${max}&sortBy=submittedDate&sortOrder=descending`;
-    const proxy = `https://corsproxy.io/?url=${encodeURIComponent(url)}`;
+    // カテゴリを最大15個ずつに分割
+    const CHUNK = 15;
+    const catChunks = [];
+    if (arxivCats.length) {
+      for (let i = 0; i < arxivCats.length; i += CHUNK) {
+        catChunks.push(arxivCats.slice(i, i + CHUNK));
+      }
+    } else {
+      catChunks.push([]); // キーワードのみ検索
+    }
 
-    const res = await fetch(proxy);
-    if (!res.ok) throw new Error(`arXiv HTTP ${res.status}`);
-    const xml = new DOMParser().parseFromString(await res.text(), 'application/xml');
+    const seen = new Set();
+    const allResults = [];
 
-    return [...xml.querySelectorAll('entry')].map(e => {
-      const rawId = (e.querySelector('id')?.textContent || '').trim();
-      const shortId = rawId.replace('http://arxiv.org/abs/', '').replace('https://arxiv.org/abs/', '');
-      return {
-        shortId,
-        title: (e.querySelector('title')?.textContent || '').trim().replace(/\s+/g, ' '),
-        summary: (e.querySelector('summary')?.textContent || '').trim().replace(/\s+/g, ' '),
-        authors: [...e.querySelectorAll('author name')].map(a => a.textContent.trim()).join(', '),
-        categories: [...e.querySelectorAll('category')].map(c => c.getAttribute('term')),
-        published: (e.querySelector('published')?.textContent || '').trim().slice(0, 10),
-        source: 'arXiv',
-        absUrl: `https://arxiv.org/abs/${shortId}`,
-        pdfUrl: `https://arxiv.org/pdf/${shortId}`,
-      };
-    });
+    for (const chunk of catChunks) {
+      const parts = [];
+      if (chunk.length) parts.push(chunk.map(c => `cat:${c}`).join('+OR+'));
+      if (keyword) parts.push(`(ti:${keyword}+OR+abs:${keyword})`);
+      const q = parts.join('+AND+');
+
+      const url = `https://export.arxiv.org/api/query?search_query=${q}&start=0&max_results=${max}&sortBy=submittedDate&sortOrder=descending`;
+      const proxy = `https://corsproxy.io/?url=${encodeURIComponent(url)}`;
+
+      try {
+        const res = await fetch(proxy);
+        if (!res.ok) continue;
+        const xml = new DOMParser().parseFromString(await res.text(), 'application/xml');
+        for (const e of xml.querySelectorAll('entry')) {
+          const rawId = (e.querySelector('id')?.textContent || '').trim();
+          const shortId = rawId.replace('http://arxiv.org/abs/', '').replace('https://arxiv.org/abs/', '');
+          if (seen.has(shortId)) continue;
+          seen.add(shortId);
+          allResults.push({
+            shortId,
+            title: (e.querySelector('title')?.textContent || '').trim().replace(/\s+/g, ' '),
+            summary: (e.querySelector('summary')?.textContent || '').trim().replace(/\s+/g, ' '),
+            authors: [...e.querySelectorAll('author name')].map(a => a.textContent.trim()).join(', '),
+            categories: [...e.querySelectorAll('category')].map(c => c.getAttribute('term')),
+            published: (e.querySelector('published')?.textContent || '').trim().slice(0, 10),
+            source: 'arXiv',
+            absUrl: `https://arxiv.org/abs/${shortId}`,
+            pdfUrl: `https://arxiv.org/pdf/${shortId}`,
+          });
+        }
+      } catch { continue; }
+
+      // 複数チャンクある場合は少し待つ
+      if (catChunks.length > 1) await new Promise(r => setTimeout(r, 300));
+    }
+
+    // 日付降順でソートして上位max件を返す
+    return allResults
+      .sort((a, b) => b.published.localeCompare(a.published))
+      .slice(0, max);
   }
 
-  // ── PsyArXiv取得（OSF API）──
+  // ── PsyArXiv取得（OSF API・corsproxy経由）──
   async function fetchPsyarxiv(keyword, max) {
-    let url = `https://api.osf.io/v2/preprints/?filter[provider]=psyarxiv&page[size]=${Math.min(max,25)}&sort=-date_created`;
-    if (keyword) url += `&filter[title]=${encodeURIComponent(keyword)}`;
-    const res = await fetch(url);
+    let apiUrl = `https://api.osf.io/v2/preprints/?filter[provider]=psyarxiv&filter[is_public]=true&page[size]=${Math.min(max,25)}&sort=-date_created`;
+    if (keyword) apiUrl += `&filter[title]=${encodeURIComponent(keyword)}`;
+    const proxyUrl = `https://corsproxy.io/?url=${encodeURIComponent(apiUrl)}`;
+    const res = await fetch(proxyUrl);
     if (!res.ok) throw new Error(`PsyArXiv HTTP ${res.status}`);
     const data = await res.json();
     return (data.data || []).map(item => {
@@ -769,7 +806,6 @@
 
   // ── 論文カードを描画 ──
   function renderPaper(paper, i) {
-    const encoded = encodeURIComponent(JSON.stringify(paper));
     const jaId = `ja-${paper.shortId.replace(/[^a-z0-9]/gi,'_')}`;
     const sourceBadge = paper.source === 'PsyArXiv'
       ? '<span class="cat-tag" style="color:#a0c8e8;border-color:#5588aa;opacity:1;">PsyArXiv</span>'
@@ -778,13 +814,17 @@
     const div = document.createElement('div');
     div.className = 'paper-item';
     div.style.animationDelay = `${i * 18}ms`;
+
+    // paper情報をdatasetに安全に格納
+    div.dataset.paper = JSON.stringify(paper);
+
     div.innerHTML = `
       <div class="paper-meta">
         <span class="paper-id">${paper.shortId}</span>
         <span class="paper-date">${paper.published}</span>
         <div>${sourceBadge}</div>
       </div>
-      <div class="paper-title" onclick="openModal('${encoded}')">${paper.title}</div>
+      <div class="paper-title">${paper.title}</div>
       <div class="paper-title-ja loading" id="${jaId}">
         <span class="ja-badge">JA</span>
         <span class="ja-text">翻訳中...</span>
@@ -793,9 +833,22 @@
       <div class="paper-links">
         <a class="paper-link" href="${paper.absUrl}" target="_blank">ページ ↗</a>
         <a class="paper-link" href="${paper.pdfUrl}" target="_blank">PDF ↗</a>
-        <button class="btn-outline" onclick="openModal('${encoded}')">詳細・AI解析 →</button>
+        <button class="btn-outline open-detail-btn">詳細・AI解析 →</button>
       </div>
     `;
+
+    // イベントリスナーで安全にopenModal呼び出し（iOS対応）
+    const openFn = (e) => {
+      e.preventDefault();
+      openModal(JSON.parse(div.dataset.paper));
+    };
+    const titleEl = div.querySelector('.paper-title');
+    const btnEl = div.querySelector('.open-detail-btn');
+    titleEl.addEventListener('click', openFn);
+    titleEl.addEventListener('touchend', openFn, { passive: false });
+    btnEl.addEventListener('click', openFn);
+    btnEl.addEventListener('touchend', openFn, { passive: false });
+
     document.getElementById('papersList').appendChild(div);
     translateTitle(paper.shortId, paper.title);
   }
@@ -858,8 +911,8 @@
   // ── モーダル ──
   let currentPaper = null;
 
-  function openModal(encoded) {
-    currentPaper = JSON.parse(decodeURIComponent(encoded));
+  function openModal(paper) {
+    currentPaper = paper;
     const p = currentPaper;
 
     document.getElementById('modalTitle').textContent = p.title;
