@@ -53,40 +53,6 @@
     opacity: 0.4;
   }
 
-  /* ── API Key バー ── */
-  .apikey-bar {
-    padding: 10px 40px;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    flex-wrap: wrap;
-    background: var(--surface2);
-  }
-
-  .apikey-label {
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    opacity: 0.4;
-    white-space: nowrap;
-  }
-
-  input[type="password"] {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    color: #fff;
-    font-family: 'DM Mono', monospace;
-    font-size: 12px;
-    padding: 6px 12px;
-    outline: none;
-    border-radius: 2px;
-    width: 280px;
-    transition: border-color 0.2s;
-  }
-
-  input[type="password"]:focus { border-color: #fff; }
-
   /* ── コントロール ── */
   .controls {
     padding: 16px 40px;
@@ -258,6 +224,29 @@
   }
 
   .paper-title:hover { opacity: 0.6; }
+
+  .paper-title-ja {
+    font-size: 13px;
+    line-height: 1.5;
+    opacity: 0.55;
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+
+  .paper-title-ja.loading { opacity: 0.2; }
+
+  .ja-badge {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    opacity: 0.5;
+    white-space: nowrap;
+    flex-shrink: 0;
+    border: 1px solid var(--border);
+    padding: 1px 5px;
+    border-radius: 2px;
+  }
 
   .paper-authors { font-size: 11px; opacity: 0.45; }
 
@@ -448,13 +437,7 @@
   </div>
 </header>
 
-<!-- Claude API Key -->
-<div class="apikey-bar">
-  <span class="apikey-label">Claude API Key</span>
-  <input type="password" id="apiKeyInput" placeholder="sk-ant-api03-..." autocomplete="off">
-  <button class="btn-outline" onclick="saveApiKey()">保存</button>
-  <span id="apiKeyStatus" style="font-size:11px; opacity:0.35;">未設定 — AI機能（翻訳・要点まとめ）を使うには入力してください</span>
-</div>
+
 
 <!-- コントロール -->
 <div class="controls">
@@ -508,7 +491,8 @@
 <footer>
   <span>Data: arXiv.org API</span>
   <span>Proxy: corsproxy.io</span>
-  <span>AI: Claude API (Anthropic)</span>
+  <span>Translation: MyMemory API</span>
+  <span>Summary: Gemini API</span>
 </footer>
 
 <!-- 論文詳細モーダル -->
@@ -528,21 +512,28 @@
 
       <div class="ai-box">
         <div class="ai-box-header">
-          <span class="ai-badge">🇯🇵 日本語翻訳 — Claude AI</span>
+          <span class="ai-badge">🇯🇵 日本語訳 — MyMemory</span>
           <button class="btn-white" id="translateBtn" onclick="runTranslate()" style="font-size:11px;padding:5px 14px;">翻訳する</button>
         </div>
         <div class="ai-content" id="translateContent">
-          <span style="opacity:0.3;">「翻訳する」を押すとClaude AIがアブストラクトを日本語に翻訳します</span>
+          <span style="opacity:0.3;">「翻訳する」を押すとアブストラクトを日本語に翻訳します（無料・キー不要）</span>
         </div>
       </div>
 
       <div class="ai-box">
         <div class="ai-box-header">
-          <span class="ai-badge">📝 要点まとめ — Claude AI</span>
+          <span class="ai-badge">📝 要点まとめ — Gemini</span>
           <button class="btn-white" id="summaryBtn" onclick="runSummary()" style="font-size:11px;padding:5px 14px;">要点を整理</button>
         </div>
         <div class="ai-content" id="summaryContent">
-          <span style="opacity:0.3;">「要点を整理」を押すとClaude AIが論文の要点を3つの観点で整理します</span>
+          <span style="opacity:0.3;">「要点を整理」を押すとGeminiが論文の要点を日本語でまとめます（APIキー必要）</span>
+        </div>
+        <div style="margin-top:12px; display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+          <input type="password" id="geminiKeyInput" placeholder="AIza..." autocomplete="off"
+            style="background:#0a0a0a; border:1px solid #2e2e2e; color:#fff; font-family:'DM Mono',monospace;
+                   font-size:11px; padding:5px 10px; border-radius:2px; outline:none; width:220px;">
+          <button class="btn-outline" onclick="saveGeminiKey()" style="font-size:10px; padding:4px 10px;">保存</button>
+          <span id="geminiKeyStatus" style="font-size:10px; opacity:0.35;">未設定</span>
         </div>
       </div>
 
@@ -565,22 +556,7 @@
     return [...document.querySelectorAll('.chip.active')].map(c => c.dataset.cat);
   }
 
-  // ── API Key ──
-  let claudeApiKey = sessionStorage.getItem('claudeApiKey') || '';
-  if (claudeApiKey) {
-    document.getElementById('apiKeyStatus').textContent = '✓ 設定済み（このセッション中のみ保持）';
-  }
-
-  function saveApiKey() {
-    const val = document.getElementById('apiKeyInput').value.trim();
-    if (!val) { alert('APIキーを入力してください'); return; }
-    claudeApiKey = val;
-    sessionStorage.setItem('claudeApiKey', val);
-    document.getElementById('apiKeyInput').value = '';
-    document.getElementById('apiKeyStatus').textContent = '✓ 設定済み（このセッション中のみ保持）';
-  }
-
-  // ── arXiv 取得（日付なし・カテゴリOR検索・最新順）──
+  // ── arXiv 取得 ──
   async function fetchPapers() {
     const cats = getActiveCats();
     const keyword = document.getElementById('keyword').value.trim();
@@ -650,6 +626,10 @@
             <div>${cats2.slice(0,3).map(c => `<span class="cat-tag">${c}</span>`).join(' ')}</div>
           </div>
           <div class="paper-title" onclick="openModal('${encoded}')">${title}</div>
+          <div class="paper-title-ja loading" id="ja-${shortId.replace(/[^a-z0-9]/gi,'_')}">
+            <span class="ja-badge">JA</span>
+            <span class="ja-text">翻訳中...</span>
+          </div>
           <div class="paper-authors">${authors || '著者情報なし'}</div>
           <div class="paper-links">
             <a class="paper-link" href="https://arxiv.org/abs/${shortId}" target="_blank">Abstract ↗</a>
@@ -658,6 +638,9 @@
           </div>
         `;
         list.appendChild(div);
+
+        // APIキー不要で常にタイトル翻訳を実行
+        translateTitle(shortId, title);
       });
 
     } catch (e) {
@@ -686,9 +669,9 @@
     document.getElementById('modalAbsLink').href = `https://arxiv.org/abs/${p.shortId}`;
     document.getElementById('modalPdfLink').href = `https://arxiv.org/pdf/${p.shortId}`;
 
-    document.getElementById('translateContent').innerHTML = '<span style="opacity:0.3;">「翻訳する」を押すとClaude AIがアブストラクトを日本語に翻訳します</span>';
-    document.getElementById('summaryContent').innerHTML = '<span style="opacity:0.3;">「要点を整理」を押すとClaude AIが論文の要点を3つの観点で整理します</span>';
+    document.getElementById('translateContent').innerHTML = '<span style="opacity:0.3;">「翻訳する」を押すとアブストラクトを日本語に翻訳します（無料・キー不要）</span>';
     document.getElementById('translateBtn').disabled = false;
+    document.getElementById('summaryContent').innerHTML = '<span style="opacity:0.3;">「要点を整理」を押すとGeminiが論文の要点を日本語でまとめます（APIキー必要）</span>';
     document.getElementById('summaryBtn').disabled = false;
 
     document.getElementById('modalOverlay').classList.add('open');
@@ -706,34 +689,63 @@
 
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-  // ── Claude API ──
-  async function callClaude(prompt) {
-    if (!claudeApiKey) {
-      alert('Claude APIキーが未設定です。\n画面上部の入力欄にAPIキーを入力・保存してください。');
-      throw new Error('no-api-key');
-    }
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': claudeApiKey,
-        'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-direct-browser-access': 'true',
-      },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        messages: [{ role: 'user', content: prompt }]
-      })
-    });
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({}));
-      throw new Error(err.error?.message || `HTTP ${res.status}`);
-    }
-    const data = await res.json();
-    return data.content.map(b => b.text || '').join('');
+  // ── タイトル日本語翻訳（MyMemory無料API・キー不要）──
+  const translateQueue = [];
+  let isTranslating = false;
+
+  function translateTitle(shortId, title) {
+    translateQueue.push({ shortId, title });
+    if (!isTranslating) processTranslateQueue();
   }
 
+  async function processTranslateQueue() {
+    if (!translateQueue.length) { isTranslating = false; return; }
+    isTranslating = true;
+    const { shortId, title } = translateQueue.shift();
+    const elId = `ja-${shortId.replace(/[^a-z0-9]/gi,'_')}`;
+    const el = document.getElementById(elId);
+
+    try {
+      const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(title)}&langpair=en|ja`;
+      const res = await fetch(url);
+      const data = await res.json();
+      const translated = data?.responseData?.translatedText;
+      if (el && translated) {
+        el.classList.remove('loading');
+        el.querySelector('.ja-text').textContent = translated;
+      } else {
+        if (el) el.style.display = 'none';
+      }
+    } catch {
+      if (el) el.style.display = 'none';
+    }
+
+    // 0.3秒待ってから次を処理
+    await new Promise(r => setTimeout(r, 300));
+    processTranslateQueue();
+  }
+
+  // ── MyMemory翻訳（共通関数）──
+  async function myMemoryTranslate(text) {
+    const chunkSize = 400;
+    const chunks = [];
+    for (let i = 0; i < text.length; i += chunkSize) {
+      chunks.push(text.slice(i, i + chunkSize));
+    }
+    const results = [];
+    for (const chunk of chunks) {
+      const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(chunk)}&langpair=en|ja`;
+      const res = await fetch(url);
+      const data = await res.json();
+      const t = data?.responseData?.translatedText;
+      if (!t) throw new Error('翻訳失敗');
+      results.push(t);
+      await new Promise(r => setTimeout(r, 300));
+    }
+    return results.join('');
+  }
+
+  // ── アブストラクト翻訳 ──
   async function runTranslate() {
     if (!currentPaper) return;
     const btn = document.getElementById('translateBtn');
@@ -742,31 +754,59 @@
     box.className = 'ai-content running';
     box.innerHTML = '<span class="spinner"></span>&nbsp; 翻訳中...';
     try {
-      const result = await callClaude(
-        `以下の英語の論文アブストラクトを、学術的に正確な日本語に翻訳してください。専門用語は適切に訳し、読みやすい文体にしてください。翻訳文のみを出力してください（前置きや説明は不要です）。\n\n${currentPaper.summary}`
-      );
+      const result = await myMemoryTranslate(currentPaper.summary);
       box.className = 'ai-content';
       box.textContent = result;
     } catch (e) {
       box.className = 'ai-content';
-      box.innerHTML = e.message === 'no-api-key'
-        ? '<span style="opacity:0.3;">APIキーを設定してください</span>'
-        : `<span class="error-msg">エラー: ${e.message}</span>`;
+      box.innerHTML = `<span class="error-msg">エラー: ${e.message}</span>`;
       btn.disabled = false;
     }
   }
 
+  // ── Gemini APIキー管理 ──
+  let geminiApiKey = sessionStorage.getItem('geminiApiKey') || '';
+  if (geminiApiKey) {
+    document.getElementById('geminiKeyStatus').textContent = '✓ 設定済み';
+  }
+
+  function saveGeminiKey() {
+    const val = document.getElementById('geminiKeyInput').value.trim();
+    if (!val) { alert('APIキーを入力してください'); return; }
+    geminiApiKey = val;
+    sessionStorage.setItem('geminiApiKey', val);
+    document.getElementById('geminiKeyInput').value = '';
+    document.getElementById('geminiKeyStatus').textContent = '✓ 設定済み';
+  }
+
+  // ── 要点まとめ（Gemini）──
   async function runSummary() {
     if (!currentPaper) return;
+    if (!geminiApiKey) {
+      alert('Gemini APIキーが未設定です。\n要点まとめボックス内の入力欄にAPIキーを入力・保存してください。');
+      return;
+    }
     const btn = document.getElementById('summaryBtn');
     const box = document.getElementById('summaryContent');
     btn.disabled = true;
     box.className = 'ai-content running';
     box.innerHTML = '<span class="spinner"></span>&nbsp; 要点を整理中...';
     try {
-      const result = await callClaude(
-        `以下の論文について、日本語で要点を整理してください。\n\n【タイトル】${currentPaper.title}\n【アブストラクト】${currentPaper.summary}\n\n以下の3つの観点で、それぞれ2〜3文で簡潔にまとめてください。出力は以下の形式のみ（前置き不要）：\n\n■ この研究が解決しようとしている問題\n（ここに記述）\n\n■ 提案手法・アプローチ\n（ここに記述）\n\n■ 主な成果・貢献\n（ここに記述）`
+      const prompt = `以下の論文について、日本語で要点を整理してください。\n\n【タイトル】${currentPaper.title}\n【アブストラクト】${currentPaper.summary}\n\n以下の3つの観点で、それぞれ2〜3文で簡潔にまとめてください。出力は以下の形式のみ（前置き不要）：\n\n■ この研究が解決しようとしている問題\n（ここに記述）\n\n■ 提案手法・アプローチ\n（ここに記述）\n\n■ 主な成果・貢献\n（ここに記述）`;
+      const res = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${geminiApiKey}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+        }
       );
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error?.message || `HTTP ${res.status}`);
+      }
+      const data = await res.json();
+      const result = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
       box.className = 'ai-content';
       let html = '';
       result.split('\n').forEach(line => {
@@ -777,9 +817,7 @@
       box.innerHTML = html;
     } catch (e) {
       box.className = 'ai-content';
-      box.innerHTML = e.message === 'no-api-key'
-        ? '<span style="opacity:0.3;">APIキーを設定してください</span>'
-        : `<span class="error-msg">エラー: ${e.message}</span>`;
+      box.innerHTML = `<span class="error-msg">エラー: ${e.message}</span>`;
       btn.disabled = false;
     }
   }
