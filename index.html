@@ -9,7 +9,6 @@
   :root {
     --bg: #0a0a0a;
     --surface: #111111;
-    --surface2: #161616;
     --border: #2e2e2e;
     --text: #ffffff;
     --tag-bg: #1a1a1a;
@@ -26,20 +25,18 @@
     line-height: 1.6;
   }
 
-  /* ── ヘッダー ── */
   header {
     border-bottom: 1px solid var(--border);
-    padding: 28px 40px 20px;
+    padding: 24px 40px 18px;
     display: flex;
     align-items: flex-end;
-    justify-content: space-between;
     gap: 16px;
     flex-wrap: wrap;
   }
 
   .logo {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 34px;
+    font-size: 32px;
     font-weight: 300;
     letter-spacing: -0.02em;
   }
@@ -50,30 +47,27 @@
     font-size: 11px;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    opacity: 0.4;
+    opacity: 0.35;
   }
 
   /* ── コントロール ── */
   .controls {
-    padding: 16px 40px;
+    padding: 14px 40px;
     border-bottom: 1px solid var(--border);
+    border-top: 1px solid var(--border);
     display: flex;
-    gap: 16px;
+    gap: 14px;
     flex-wrap: wrap;
     align-items: flex-end;
   }
 
-  .ctrl-group {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
+  .ctrl-group { display: flex; flex-direction: column; gap: 5px; }
 
   label {
     font-size: 10px;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    opacity: 0.4;
+    opacity: 0.35;
   }
 
   input[type="text"], select {
@@ -82,30 +76,49 @@
     color: #fff;
     font-family: 'DM Mono', monospace;
     font-size: 12px;
-    padding: 7px 12px;
+    padding: 6px 10px;
     outline: none;
     border-radius: 2px;
     transition: border-color 0.2s;
   }
 
   input[type="text"]:focus, select:focus { border-color: #fff; }
-  input[type="text"] { width: 200px; }
-  select { cursor: pointer; min-width: 100px; }
+  input[type="text"] { width: 180px; }
+  select { cursor: pointer; min-width: 90px; }
 
-  /* ── カテゴリチップ ── */
-  .cat-chips {
+  /* ── カテゴリセクション ── */
+  .cat-section {
+    padding: 12px 40px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .cat-group {
     display: flex;
     flex-wrap: wrap;
-    gap: 5px;
     align-items: center;
+    gap: 6px;
   }
+
+  .cat-group-label {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.3;
+    width: 80px;
+    flex-shrink: 0;
+  }
+
+  .cat-chips { display: flex; flex-wrap: wrap; gap: 4px; }
 
   .chip {
     background: var(--tag-bg);
     border: 1px solid var(--border);
-    color: #ffffff;
+    color: #fff;
     font-family: 'DM Mono', monospace;
-    padding: 5px 10px;
+    padding: 4px 9px;
     cursor: pointer;
     transition: all 0.15s;
     border-radius: 2px;
@@ -116,12 +129,16 @@
     gap: 1px;
   }
 
-  .chip-code { font-size: 9px; opacity: 0.4; letter-spacing: 0.04em; }
-  .chip-label { font-size: 11px; }
+  .chip-code { font-size: 9px; opacity: 0.4; letter-spacing: 0.03em; }
+  .chip-label { font-size: 10px; }
 
   .chip.active { background: #fff; border-color: #fff; color: #0a0a0a; }
   .chip.active .chip-code { opacity: 0.35; }
   .chip:hover:not(.active) { border-color: #fff; }
+
+  .chip.psychip { border-color: #5588aa; color: #a0c8e8; }
+  .chip.psychip.active { background: #5588aa; border-color: #5588aa; color: #fff; }
+  .chip.psychip:hover:not(.active) { border-color: #a0c8e8; }
 
   /* ── ボタン ── */
   .btn-white {
@@ -130,7 +147,7 @@
     color: #0a0a0a;
     font-family: 'DM Mono', monospace;
     font-size: 12px;
-    padding: 8px 22px;
+    padding: 7px 20px;
     cursor: pointer;
     letter-spacing: 0.06em;
     text-transform: uppercase;
@@ -148,7 +165,7 @@
     color: #fff;
     font-family: 'DM Mono', monospace;
     font-size: 11px;
-    padding: 5px 12px;
+    padding: 4px 11px;
     cursor: pointer;
     letter-spacing: 0.05em;
     text-transform: uppercase;
@@ -161,14 +178,14 @@
 
   /* ── ステータスバー ── */
   .status-bar {
-    padding: 10px 40px;
+    padding: 9px 40px;
     border-bottom: 1px solid var(--border);
     font-size: 11px;
-    min-height: 38px;
+    min-height: 36px;
     display: flex;
     align-items: center;
-    gap: 12px;
-    opacity: 0.6;
+    gap: 10px;
+    opacity: 0.55;
   }
 
   .spinner {
@@ -184,13 +201,13 @@
   @keyframes spin { to { transform: rotate(360deg); } }
 
   /* ── 論文リスト ── */
-  .papers-list { padding: 20px 40px; display: flex; flex-direction: column; }
+  .papers-list { padding: 16px 40px; display: flex; flex-direction: column; }
 
   .paper-item {
     border-bottom: 1px solid var(--border);
-    padding: 18px 0;
+    padding: 16px 0;
     display: grid;
-    gap: 7px;
+    gap: 6px;
     opacity: 0;
     animation: fadeIn 0.3s ease forwards;
   }
@@ -200,23 +217,21 @@
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  .paper-meta { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-
-  .paper-id { font-size: 10px; opacity: 0.35; letter-spacing: 0.04em; }
-
-  .paper-date { font-size: 10px; opacity: 0.35; }
+  .paper-meta { display: flex; gap: 7px; align-items: center; flex-wrap: wrap; }
+  .paper-id { font-size: 10px; opacity: 0.3; letter-spacing: 0.04em; }
+  .paper-date { font-size: 10px; opacity: 0.3; }
 
   .cat-tag {
     font-size: 10px;
-    padding: 1px 6px;
+    padding: 1px 5px;
     border: 1px solid var(--border);
     border-radius: 2px;
-    opacity: 0.6;
+    opacity: 0.55;
   }
 
   .paper-title {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 19px;
+    font-size: 18px;
     font-weight: 300;
     line-height: 1.3;
     cursor: pointer;
@@ -226,12 +241,12 @@
   .paper-title:hover { opacity: 0.6; }
 
   .paper-title-ja {
-    font-size: 13px;
+    font-size: 12px;
     line-height: 1.5;
-    opacity: 0.55;
+    opacity: 0.5;
     display: flex;
     align-items: baseline;
-    gap: 8px;
+    gap: 7px;
   }
 
   .paper-title-ja.loading { opacity: 0.2; }
@@ -248,9 +263,8 @@
     border-radius: 2px;
   }
 
-  .paper-authors { font-size: 11px; opacity: 0.45; }
-
-  .paper-links { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .paper-authors { font-size: 11px; opacity: 0.4; }
+  .paper-links { display: flex; gap: 9px; align-items: center; flex-wrap: wrap; }
 
   .paper-link {
     color: #fff;
@@ -258,13 +272,13 @@
     font-size: 10px;
     letter-spacing: 0.04em;
     text-transform: uppercase;
-    opacity: 0.35;
+    opacity: 0.3;
     transition: opacity 0.15s;
   }
 
   .paper-link:hover { opacity: 1; }
 
-  .empty-state { padding: 60px 40px; text-align: center; opacity: 0.3; }
+  .empty-state { padding: 60px 40px; text-align: center; opacity: 0.25; }
   .empty-state .big {
     font-family: 'Cormorant Garamond', serif;
     font-size: 48px;
@@ -277,11 +291,11 @@
 
   footer {
     border-top: 1px solid var(--border);
-    padding: 14px 40px;
+    padding: 12px 40px;
     font-size: 10px;
-    opacity: 0.25;
+    opacity: 0.2;
     display: flex;
-    gap: 20px;
+    gap: 16px;
     flex-wrap: wrap;
   }
 
@@ -317,7 +331,7 @@
   .modal-overlay.open .modal { transform: translateY(0); }
 
   .modal-header {
-    padding: 24px 30px 18px;
+    padding: 22px 28px 16px;
     border-bottom: 1px solid var(--border);
     display: flex;
     justify-content: space-between;
@@ -327,7 +341,7 @@
 
   .modal-title {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 22px;
+    font-size: 21px;
     font-weight: 300;
     line-height: 1.35;
     flex: 1;
@@ -341,7 +355,6 @@
     cursor: pointer;
     opacity: 0.3;
     padding: 2px 4px;
-    line-height: 1;
     transition: opacity 0.15s;
     flex-shrink: 0;
   }
@@ -349,23 +362,23 @@
   .modal-close:hover { opacity: 1; }
 
   .modal-meta {
-    padding: 10px 30px;
+    padding: 9px 28px;
     border-bottom: 1px solid var(--border);
     font-size: 11px;
-    opacity: 0.4;
+    opacity: 0.35;
     display: flex;
     flex-wrap: wrap;
-    gap: 14px;
+    gap: 12px;
   }
 
-  .modal-body { padding: 22px 30px; display: flex; flex-direction: column; gap: 20px; }
+  .modal-body { padding: 20px 28px; display: flex; flex-direction: column; gap: 18px; }
 
   .section-label {
     font-size: 10px;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    opacity: 0.35;
-    margin-bottom: 8px;
+    opacity: 0.3;
+    margin-bottom: 7px;
   }
 
   .modal-abstract { font-size: 13px; line-height: 1.85; opacity: 0.8; }
@@ -374,19 +387,18 @@
     background: var(--bg);
     border: 1px solid var(--border);
     border-radius: 3px;
-    padding: 18px;
+    padding: 16px;
   }
 
   .ai-box-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
   }
 
-  .ai-badge { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.35; }
-
-  .ai-content { font-size: 13px; line-height: 1.85; min-height: 36px; }
+  .ai-badge { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.3; }
+  .ai-content { font-size: 13px; line-height: 1.85; min-height: 32px; }
   .ai-content.running { opacity: 0.4; }
 
   .ai-section-head {
@@ -395,8 +407,8 @@
     text-transform: uppercase;
     letter-spacing: 0.08em;
     opacity: 0.4;
-    margin-top: 14px;
-    margin-bottom: 5px;
+    margin-top: 12px;
+    margin-bottom: 4px;
     border-left: 2px solid var(--border);
     padding-left: 8px;
   }
@@ -412,7 +424,7 @@
     letter-spacing: 0.06em;
     text-transform: uppercase;
     border: 1px solid var(--border);
-    padding: 6px 16px;
+    padding: 6px 14px;
     border-radius: 2px;
     transition: all 0.15s;
   }
@@ -420,11 +432,11 @@
   .modal-link:hover { background: #fff; color: #0a0a0a; }
 
   @media (max-width: 600px) {
-    header, .controls, .papers-list, .status-bar, footer, .apikey-bar { padding-left: 20px; padding-right: 20px; }
-    .logo { font-size: 28px; }
-    input[type="text"] { width: 140px; }
-    input[type="password"] { width: 200px; }
-    .modal-header, .modal-body, .modal-meta { padding-left: 20px; padding-right: 20px; }
+    header, .controls, .cat-section, .papers-list, .status-bar, footer { padding-left: 20px; padding-right: 20px; }
+    .logo { font-size: 26px; }
+    input[type="text"] { width: 130px; }
+    .modal-header, .modal-body, .modal-meta { padding-left: 18px; padding-right: 18px; }
+    .cat-group-label { display: none; }
   }
 </style>
 </head>
@@ -433,37 +445,122 @@
 <header>
   <div>
     <div class="logo">arXiv <span>Daily</span></div>
-    <div class="tagline">最新論文ビューア — Powered by arXiv API</div>
+    <div class="tagline">最新論文ビューア — arXiv + PsyArXiv</div>
   </div>
 </header>
 
+<!-- カテゴリ選択 -->
+<div class="cat-section">
 
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+    <span style="font-size:10px; text-transform:uppercase; letter-spacing:0.1em; opacity:0.35;">カテゴリ（クリックでON/OFF）</span>
+    <button class="btn-outline" onclick="toggleAllCats()" id="toggleAllBtn" style="font-size:10px; padding:3px 10px;">すべてOFF</button>
+  </div>
 
-<!-- コントロール -->
-<div class="controls">
-
-  <div class="ctrl-group">
-    <label>カテゴリ（複数選択可）</label>
-    <div class="cat-chips" id="catChips">
-      <div class="chip active" data-cat="cs.AI"><span class="chip-code">cs.AI</span><span class="chip-label">人工知能</span></div>
-      <div class="chip active" data-cat="cs.LG"><span class="chip-code">cs.LG</span><span class="chip-label">機械学習</span></div>
-      <div class="chip active" data-cat="cs.CL"><span class="chip-code">cs.CL</span><span class="chip-label">自然言語処理</span></div>
-      <div class="chip active" data-cat="cs.CV"><span class="chip-code">cs.CV</span><span class="chip-label">コンピュータビジョン</span></div>
-      <div class="chip active" data-cat="cs.RO"><span class="chip-code">cs.RO</span><span class="chip-label">ロボティクス</span></div>
-      <div class="chip active" data-cat="cs.NE"><span class="chip-code">cs.NE</span><span class="chip-label">ニューラルネット</span></div>
-      <div class="chip active" data-cat="math.ST"><span class="chip-code">math.ST</span><span class="chip-label">統計学</span></div>
-      <div class="chip active" data-cat="math.OC"><span class="chip-code">math.OC</span><span class="chip-label">最適化・制御</span></div>
-      <div class="chip active" data-cat="physics.data-an"><span class="chip-code">physics</span><span class="chip-label">物理学</span></div>
-      <div class="chip active" data-cat="quant-ph"><span class="chip-code">quant-ph</span><span class="chip-label">量子物理学</span></div>
-      <div class="chip active" data-cat="stat.ML"><span class="chip-code">stat.ML</span><span class="chip-label">統計的ML</span></div>
+  <div class="cat-group">
+    <span class="cat-group-label">AI / CS</span>
+    <div class="cat-chips">
+      <div class="chip active" data-cat="cs.AI" data-source="arxiv"><span class="chip-code">cs.AI</span><span class="chip-label">人工知能</span></div>
+      <div class="chip active" data-cat="cs.LG" data-source="arxiv"><span class="chip-code">cs.LG</span><span class="chip-label">機械学習</span></div>
+      <div class="chip active" data-cat="cs.CL" data-source="arxiv"><span class="chip-code">cs.CL</span><span class="chip-label">自然言語処理</span></div>
+      <div class="chip active" data-cat="cs.CV" data-source="arxiv"><span class="chip-code">cs.CV</span><span class="chip-label">コンピュータビジョン</span></div>
+      <div class="chip active" data-cat="cs.RO" data-source="arxiv"><span class="chip-code">cs.RO</span><span class="chip-label">ロボティクス</span></div>
+      <div class="chip active" data-cat="cs.NE" data-source="arxiv"><span class="chip-code">cs.NE</span><span class="chip-label">ニューラルネット</span></div>
+      <div class="chip active" data-cat="cs.CR" data-source="arxiv"><span class="chip-code">cs.CR</span><span class="chip-label">セキュリティ</span></div>
+      <div class="chip active" data-cat="cs.DC" data-source="arxiv"><span class="chip-code">cs.DC</span><span class="chip-label">分散計算</span></div>
+      <div class="chip active" data-cat="cs.DB" data-source="arxiv"><span class="chip-code">cs.DB</span><span class="chip-label">データベース</span></div>
+      <div class="chip active" data-cat="cs.HC" data-source="arxiv"><span class="chip-code">cs.HC</span><span class="chip-label">HCI</span></div>
+      <div class="chip active" data-cat="cs.IR" data-source="arxiv"><span class="chip-code">cs.IR</span><span class="chip-label">情報検索</span></div>
+      <div class="chip active" data-cat="cs.SE" data-source="arxiv"><span class="chip-code">cs.SE</span><span class="chip-label">ソフトウェア工学</span></div>
+      <div class="chip active" data-cat="cs.SY" data-source="arxiv"><span class="chip-code">cs.SY</span><span class="chip-label">システム制御</span></div>
+      <div class="chip active" data-cat="cs.GT" data-source="arxiv"><span class="chip-code">cs.GT</span><span class="chip-label">ゲーム理論</span></div>
+      <div class="chip active" data-cat="cs.MA" data-source="arxiv"><span class="chip-code">cs.MA</span><span class="chip-label">マルチエージェント</span></div>
+      <div class="chip active" data-cat="cs.CY" data-source="arxiv"><span class="chip-code">cs.CY</span><span class="chip-label">社会・倫理</span></div>
+      <div class="chip active" data-cat="cs.PL" data-source="arxiv"><span class="chip-code">cs.PL</span><span class="chip-label">プログラミング言語</span></div>
+      <div class="chip active" data-cat="cs.AR" data-source="arxiv"><span class="chip-code">cs.AR</span><span class="chip-label">ハードウェア</span></div>
+      <div class="chip active" data-cat="cs.GR" data-source="arxiv"><span class="chip-code">cs.GR</span><span class="chip-label">グラフィクス</span></div>
+      <div class="chip active" data-cat="cs.MM" data-source="arxiv"><span class="chip-code">cs.MM</span><span class="chip-label">マルチメディア</span></div>
     </div>
   </div>
 
-  <div class="ctrl-group">
-    <label>キーワード（任意）</label>
-    <input type="text" id="keyword" placeholder="例: transformer, diffusion">
+  <div class="cat-group">
+    <span class="cat-group-label">数学</span>
+    <div class="cat-chips">
+      <div class="chip active" data-cat="math.ST" data-source="arxiv"><span class="chip-code">math.ST</span><span class="chip-label">統計学</span></div>
+      <div class="chip active" data-cat="math.OC" data-source="arxiv"><span class="chip-code">math.OC</span><span class="chip-label">最適化・制御</span></div>
+      <div class="chip active" data-cat="math.PR" data-source="arxiv"><span class="chip-code">math.PR</span><span class="chip-label">確率論</span></div>
+      <div class="chip active" data-cat="math.NA" data-source="arxiv"><span class="chip-code">math.NA</span><span class="chip-label">数値解析</span></div>
+      <div class="chip active" data-cat="math.LO" data-source="arxiv"><span class="chip-code">math.LO</span><span class="chip-label">数理論理学</span></div>
+      <div class="chip active" data-cat="math.CO" data-source="arxiv"><span class="chip-code">math.CO</span><span class="chip-label">組み合わせ論</span></div>
+      <div class="chip active" data-cat="math.IT" data-source="arxiv"><span class="chip-code">math.IT</span><span class="chip-label">情報理論</span></div>
+    </div>
   </div>
 
+  <div class="cat-group">
+    <span class="cat-group-label">物理・宇宙</span>
+    <div class="cat-chips">
+      <div class="chip active" data-cat="quant-ph" data-source="arxiv"><span class="chip-code">quant-ph</span><span class="chip-label">量子物理学</span></div>
+      <div class="chip active" data-cat="physics.data-an" data-source="arxiv"><span class="chip-code">physics</span><span class="chip-label">物理学全般</span></div>
+      <div class="chip active" data-cat="astro-ph.GA" data-source="arxiv"><span class="chip-code">astro-ph.GA</span><span class="chip-label">銀河天文学</span></div>
+      <div class="chip active" data-cat="astro-ph.CO" data-source="arxiv"><span class="chip-code">astro-ph.CO</span><span class="chip-label">宇宙論</span></div>
+      <div class="chip active" data-cat="astro-ph.EP" data-source="arxiv"><span class="chip-code">astro-ph.EP</span><span class="chip-label">惑星科学</span></div>
+      <div class="chip active" data-cat="gr-qc" data-source="arxiv"><span class="chip-code">gr-qc</span><span class="chip-label">相対性理論</span></div>
+      <div class="chip active" data-cat="hep-th" data-source="arxiv"><span class="chip-code">hep-th</span><span class="chip-label">素粒子論</span></div>
+      <div class="chip active" data-cat="cond-mat.mtrl-sci" data-source="arxiv"><span class="chip-code">cond-mat</span><span class="chip-label">材料科学</span></div>
+    </div>
+  </div>
+
+  <div class="cat-group">
+    <span class="cat-group-label">統計・信号</span>
+    <div class="cat-chips">
+      <div class="chip active" data-cat="stat.ML" data-source="arxiv"><span class="chip-code">stat.ML</span><span class="chip-label">統計的ML</span></div>
+      <div class="chip active" data-cat="stat.ME" data-source="arxiv"><span class="chip-code">stat.ME</span><span class="chip-label">統計手法</span></div>
+      <div class="chip active" data-cat="stat.AP" data-source="arxiv"><span class="chip-code">stat.AP</span><span class="chip-label">応用統計</span></div>
+      <div class="chip active" data-cat="eess.SP" data-source="arxiv"><span class="chip-code">eess.SP</span><span class="chip-label">信号処理</span></div>
+      <div class="chip active" data-cat="eess.IV" data-source="arxiv"><span class="chip-code">eess.IV</span><span class="chip-label">画像処理</span></div>
+      <div class="chip active" data-cat="eess.AS" data-source="arxiv"><span class="chip-code">eess.AS</span><span class="chip-label">音声処理</span></div>
+    </div>
+  </div>
+
+  <div class="cat-group">
+    <span class="cat-group-label">生物・医学</span>
+    <div class="cat-chips">
+      <div class="chip active" data-cat="q-bio.NC" data-source="arxiv"><span class="chip-code">q-bio.NC</span><span class="chip-label">神経科学</span></div>
+      <div class="chip active" data-cat="q-bio.GN" data-source="arxiv"><span class="chip-code">q-bio.GN</span><span class="chip-label">ゲノミクス</span></div>
+      <div class="chip active" data-cat="q-bio.PE" data-source="arxiv"><span class="chip-code">q-bio.PE</span><span class="chip-label">集団・進化</span></div>
+      <div class="chip active" data-cat="q-bio.BM" data-source="arxiv"><span class="chip-code">q-bio.BM</span><span class="chip-label">生体分子</span></div>
+      <div class="chip active" data-cat="q-bio.QM" data-source="arxiv"><span class="chip-code">q-bio.QM</span><span class="chip-label">定量生物学</span></div>
+    </div>
+  </div>
+
+  <div class="cat-group">
+    <span class="cat-group-label">経済・金融</span>
+    <div class="cat-chips">
+      <div class="chip active" data-cat="econ.GN" data-source="arxiv"><span class="chip-code">econ.GN</span><span class="chip-label">経済学全般</span></div>
+      <div class="chip active" data-cat="econ.EM" data-source="arxiv"><span class="chip-code">econ.EM</span><span class="chip-label">計量経済学</span></div>
+      <div class="chip active" data-cat="q-fin.ST" data-source="arxiv"><span class="chip-code">q-fin.ST</span><span class="chip-label">統計ファイナンス</span></div>
+      <div class="chip active" data-cat="q-fin.PM" data-source="arxiv"><span class="chip-code">q-fin.PM</span><span class="chip-label">ポートフォリオ</span></div>
+      <div class="chip active" data-cat="q-fin.TR" data-source="arxiv"><span class="chip-code">q-fin.TR</span><span class="chip-label">市場・取引</span></div>
+      <div class="chip active" data-cat="q-fin.RM" data-source="arxiv"><span class="chip-code">q-fin.RM</span><span class="chip-label">リスク管理</span></div>
+    </div>
+  </div>
+
+  <div class="cat-group">
+    <span class="cat-group-label">心理・認知</span>
+    <div class="cat-chips">
+      <div class="chip psychip active" data-cat="psyarxiv" data-source="psyarxiv"><span class="chip-code">PsyArXiv</span><span class="chip-label">心理学・認知科学</span></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- コントロール -->
+<div class="controls">
+  <div class="ctrl-group">
+    <label>キーワード（任意・日本語可）</label>
+    <input type="text" id="keyword" placeholder="例: 拡散モデル, attention">
+    <div id="kwTranslated" style="font-size:10px; opacity:0; height:14px; transition:opacity 0.3s; color:#aaddcc; letter-spacing:0.03em;"></div>
+  </div>
   <div class="ctrl-group">
     <label>取得件数</label>
     <select id="maxResults">
@@ -472,9 +569,7 @@
       <option value="50">50件</option>
     </select>
   </div>
-
   <button class="btn-white" id="fetchBtn" onclick="fetchPapers()">最新を取得</button>
-
 </div>
 
 <div class="status-bar" id="statusBar">
@@ -489,7 +584,7 @@
 </div>
 
 <footer>
-  <span>Data: arXiv.org API</span>
+  <span>Data: arXiv.org + PsyArXiv (OSF)</span>
   <span>Proxy: corsproxy.io</span>
   <span>Translation: MyMemory API</span>
   <span>Summary: Gemini API</span>
@@ -513,7 +608,7 @@
       <div class="ai-box">
         <div class="ai-box-header">
           <span class="ai-badge">🇯🇵 日本語訳 — MyMemory</span>
-          <button class="btn-white" id="translateBtn" onclick="runTranslate()" style="font-size:11px;padding:5px 14px;">翻訳する</button>
+          <button class="btn-white" id="translateBtn" onclick="runTranslate()" style="font-size:11px;padding:5px 12px;">翻訳する</button>
         </div>
         <div class="ai-content" id="translateContent">
           <span style="opacity:0.3;">「翻訳する」を押すとアブストラクトを日本語に翻訳します（無料・キー不要）</span>
@@ -523,22 +618,22 @@
       <div class="ai-box">
         <div class="ai-box-header">
           <span class="ai-badge">📝 要点まとめ — Gemini</span>
-          <button class="btn-white" id="summaryBtn" onclick="runSummary()" style="font-size:11px;padding:5px 14px;">要点を整理</button>
+          <button class="btn-white" id="summaryBtn" onclick="runSummary()" style="font-size:11px;padding:5px 12px;">要点を整理</button>
         </div>
         <div class="ai-content" id="summaryContent">
           <span style="opacity:0.3;">「要点を整理」を押すとGeminiが論文の要点を日本語でまとめます（APIキー必要）</span>
         </div>
-        <div style="margin-top:12px; display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+        <div style="margin-top:10px; display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
           <input type="password" id="geminiKeyInput" placeholder="AIza..." autocomplete="off"
             style="background:#0a0a0a; border:1px solid #2e2e2e; color:#fff; font-family:'DM Mono',monospace;
                    font-size:11px; padding:5px 10px; border-radius:2px; outline:none; width:220px;">
           <button class="btn-outline" onclick="saveGeminiKey()" style="font-size:10px; padding:4px 10px;">保存</button>
-          <span id="geminiKeyStatus" style="font-size:10px; opacity:0.35;">未設定</span>
+          <span id="geminiKeyStatus" style="font-size:10px; opacity:0.3;">未設定</span>
         </div>
       </div>
 
       <div class="modal-footer-links">
-        <a class="modal-link" id="modalAbsLink" href="#" target="_blank">arXiv ページ ↗</a>
+        <a class="modal-link" id="modalAbsLink" href="#" target="_blank">ページ ↗</a>
         <a class="modal-link" id="modalPdfLink" href="#" target="_blank">PDF ↗</a>
       </div>
 
@@ -547,22 +642,171 @@
 </div>
 
 <script>
-  // ── カテゴリチップ ──
+  // ── チップのトグル ──
   document.querySelectorAll('.chip').forEach(c =>
     c.addEventListener('click', () => c.classList.toggle('active'))
   );
 
-  function getActiveCats() {
-    return [...document.querySelectorAll('.chip.active')].map(c => c.dataset.cat);
+  // ── 全オフ / 全オン トグル ──
+  let allOff = false;
+  function toggleAllCats() {
+    const chips = document.querySelectorAll('.chip');
+    const btn = document.getElementById('toggleAllBtn');
+    if (!allOff) {
+      chips.forEach(c => c.classList.remove('active'));
+      btn.textContent = 'すべてON';
+      allOff = true;
+    } else {
+      chips.forEach(c => c.classList.add('active'));
+      btn.textContent = 'すべてOFF';
+      allOff = false;
+    }
   }
 
-  // ── arXiv 取得 ──
+  // ── キーワード入力：日本語なら翻訳をリアルタイム表示 ──
+  let kwTimer = null;
+  document.getElementById('keyword').addEventListener('input', () => {
+    clearTimeout(kwTimer);
+    const val = document.getElementById('keyword').value.trim();
+    const el = document.getElementById('kwTranslated');
+    if (!val || !containsJapanese(val)) {
+      el.style.opacity = '0';
+      el.textContent = '';
+      return;
+    }
+    el.style.opacity = '0.5';
+    el.textContent = '翻訳中...';
+    kwTimer = setTimeout(async () => {
+      const translated = await toEnglishKeyword(val);
+      if (translated && translated !== val) {
+        el.style.opacity = '1';
+        el.textContent = `→ "${translated}" で検索します`;
+      } else {
+        el.style.opacity = '0';
+      }
+    }, 600);
+  });
+
+  // ── カテゴリ分類 ──
+  function getActiveCats() {
+    const arxivCats = [];
+    let usePsyarxiv = false;
+    document.querySelectorAll('.chip.active').forEach(c => {
+      if (c.dataset.source === 'arxiv') arxivCats.push(c.dataset.cat);
+      if (c.dataset.source === 'psyarxiv') usePsyarxiv = true;
+    });
+    return { arxivCats, usePsyarxiv };
+  }
+
+  // ── 日本語判定 ──
+  function containsJapanese(str) {
+    return /[\u3000-\u9fff\uff00-\uffef]/.test(str);
+  }
+
+  // ── 日本語→英語翻訳 ──
+  async function toEnglishKeyword(keyword) {
+    const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(keyword)}&langpair=ja|en`;
+    const res = await fetch(url);
+    const data = await res.json();
+    return data?.responseData?.translatedText || keyword;
+  }
+
+  // ── arXiv取得 ──
+  async function fetchArxiv(arxivCats, keyword, max) {
+    const parts = [];
+    if (arxivCats.length) parts.push(arxivCats.map(c => `cat:${c}`).join('+OR+'));
+    if (keyword) parts.push(`(ti:${keyword}+OR+abs:${keyword})`);
+    if (!parts.length) return [];
+
+    const q = parts.join('+AND+');
+    const url = `https://export.arxiv.org/api/query?search_query=${q}&start=0&max_results=${max}&sortBy=submittedDate&sortOrder=descending`;
+    const proxy = `https://corsproxy.io/?url=${encodeURIComponent(url)}`;
+
+    const res = await fetch(proxy);
+    if (!res.ok) throw new Error(`arXiv HTTP ${res.status}`);
+    const xml = new DOMParser().parseFromString(await res.text(), 'application/xml');
+
+    return [...xml.querySelectorAll('entry')].map(e => {
+      const rawId = (e.querySelector('id')?.textContent || '').trim();
+      const shortId = rawId.replace('http://arxiv.org/abs/', '').replace('https://arxiv.org/abs/', '');
+      return {
+        shortId,
+        title: (e.querySelector('title')?.textContent || '').trim().replace(/\s+/g, ' '),
+        summary: (e.querySelector('summary')?.textContent || '').trim().replace(/\s+/g, ' '),
+        authors: [...e.querySelectorAll('author name')].map(a => a.textContent.trim()).join(', '),
+        categories: [...e.querySelectorAll('category')].map(c => c.getAttribute('term')),
+        published: (e.querySelector('published')?.textContent || '').trim().slice(0, 10),
+        source: 'arXiv',
+        absUrl: `https://arxiv.org/abs/${shortId}`,
+        pdfUrl: `https://arxiv.org/pdf/${shortId}`,
+      };
+    });
+  }
+
+  // ── PsyArXiv取得（OSF API）──
+  async function fetchPsyarxiv(keyword, max) {
+    let url = `https://api.osf.io/v2/preprints/?filter[provider]=psyarxiv&page[size]=${Math.min(max,25)}&sort=-date_created`;
+    if (keyword) url += `&filter[title]=${encodeURIComponent(keyword)}`;
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`PsyArXiv HTTP ${res.status}`);
+    const data = await res.json();
+    return (data.data || []).map(item => {
+      const attr = item.attributes || {};
+      const id = item.id || '';
+      return {
+        shortId: `psyarxiv-${id}`,
+        title: attr.title || '(タイトルなし)',
+        summary: attr.description || '',
+        authors: '',
+        categories: ['Psychology'],
+        published: (attr.date_created || '').slice(0, 10),
+        source: 'PsyArXiv',
+        absUrl: `https://osf.io/preprints/psyarxiv/${id}`,
+        pdfUrl: `https://osf.io/preprints/psyarxiv/${id}`,
+      };
+    });
+  }
+
+  // ── 論文カードを描画 ──
+  function renderPaper(paper, i) {
+    const encoded = encodeURIComponent(JSON.stringify(paper));
+    const jaId = `ja-${paper.shortId.replace(/[^a-z0-9]/gi,'_')}`;
+    const sourceBadge = paper.source === 'PsyArXiv'
+      ? '<span class="cat-tag" style="color:#a0c8e8;border-color:#5588aa;opacity:1;">PsyArXiv</span>'
+      : paper.categories.slice(0,3).map(c => `<span class="cat-tag">${c}</span>`).join(' ');
+
+    const div = document.createElement('div');
+    div.className = 'paper-item';
+    div.style.animationDelay = `${i * 18}ms`;
+    div.innerHTML = `
+      <div class="paper-meta">
+        <span class="paper-id">${paper.shortId}</span>
+        <span class="paper-date">${paper.published}</span>
+        <div>${sourceBadge}</div>
+      </div>
+      <div class="paper-title" onclick="openModal('${encoded}')">${paper.title}</div>
+      <div class="paper-title-ja loading" id="${jaId}">
+        <span class="ja-badge">JA</span>
+        <span class="ja-text">翻訳中...</span>
+      </div>
+      <div class="paper-authors">${paper.authors || '著者情報なし'}</div>
+      <div class="paper-links">
+        <a class="paper-link" href="${paper.absUrl}" target="_blank">ページ ↗</a>
+        <a class="paper-link" href="${paper.pdfUrl}" target="_blank">PDF ↗</a>
+        <button class="btn-outline" onclick="openModal('${encoded}')">詳細・AI解析 →</button>
+      </div>
+    `;
+    document.getElementById('papersList').appendChild(div);
+    translateTitle(paper.shortId, paper.title);
+  }
+
+  // ── メイン取得 ──
   async function fetchPapers() {
-    const cats = getActiveCats();
-    const keyword = document.getElementById('keyword').value.trim();
+    const { arxivCats, usePsyarxiv } = getActiveCats();
+    const keywordRaw = document.getElementById('keyword').value.trim();
     const max = document.getElementById('maxResults').value;
 
-    if (!cats.length && !keyword) {
+    if (!arxivCats.length && !usePsyarxiv && !keywordRaw) {
       alert('カテゴリかキーワードを少なくとも1つ選択してください');
       return;
     }
@@ -572,80 +816,40 @@
     const list = document.getElementById('papersList');
 
     btn.disabled = true;
-    statusBar.innerHTML = '<span class="spinner"></span>&nbsp; 最新論文を取得中...';
     list.innerHTML = '';
 
-    // クエリ構築：カテゴリOR + キーワード（日付指定なし）
-    const parts = [];
-    if (cats.length) {
-      parts.push(cats.map(c => `cat:${c}`).join('+OR+'));
+    let keyword = keywordRaw;
+    if (keywordRaw && containsJapanese(keywordRaw)) {
+      statusBar.innerHTML = '<span class="spinner"></span>&nbsp; キーワードを翻訳中...';
+      keyword = await toEnglishKeyword(keywordRaw);
+      statusBar.innerHTML = `<span class="spinner"></span>&nbsp; 「${keywordRaw}」→「${keyword}」で検索中...`;
+    } else {
+      statusBar.innerHTML = '<span class="spinner"></span>&nbsp; 論文を取得中...';
     }
-    if (keyword) {
-      parts.push(`(ti:${keyword}+OR+abs:${keyword})`);
-    }
-    const searchQuery = parts.join('+AND+');
-
-    const arxivUrl = `https://export.arxiv.org/api/query?search_query=${searchQuery}&start=0&max_results=${max}&sortBy=submittedDate&sortOrder=descending`;
-    const proxyUrl = `https://corsproxy.io/?url=${encodeURIComponent(arxivUrl)}`;
 
     try {
-      const res = await fetch(proxyUrl);
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const text = await res.text();
-      const xml = new DOMParser().parseFromString(text, 'application/xml');
-      const entries = [...xml.querySelectorAll('entry')];
+      const [arxivPapers, psyPapers] = await Promise.all([
+        (arxivCats.length || keyword) ? fetchArxiv(arxivCats, keyword, max) : Promise.resolve([]),
+        usePsyarxiv ? fetchPsyarxiv(keyword, max) : Promise.resolve([]),
+      ]);
+      const allPapers = [...arxivPapers, ...psyPapers];
 
-      if (!entries.length) {
-        statusBar.innerHTML = '論文が見つかりませんでした。カテゴリやキーワードを変えてお試しください。';
+      if (!allPapers.length) {
+        statusBar.innerHTML = '論文が見つかりませんでした。条件を変えてお試しください。';
         list.innerHTML = `<div class="empty-state"><span class="big">∅</span><span>該当なし</span></div>`;
         btn.disabled = false;
         return;
       }
 
-      statusBar.innerHTML = `<strong>${entries.length}件</strong>&nbsp; 取得完了 &nbsp;·&nbsp; ${new Date().toLocaleString('ja-JP')}`;
+      const kwSuffix = keywordRaw && containsJapanese(keywordRaw) ? `&nbsp;·&nbsp;「${keywordRaw}」→「${keyword}」` : '';
+      const srcLabel = usePsyarxiv ? 'arXiv + PsyArXiv' : 'arXiv';
+      statusBar.innerHTML = `<strong>${allPapers.length}件</strong>&nbsp; 取得完了 &nbsp;·&nbsp; ${srcLabel} &nbsp;·&nbsp; ${new Date().toLocaleString('ja-JP')}${kwSuffix}`;
 
-      entries.forEach((entry, i) => {
-        const rawId = (entry.querySelector('id')?.textContent || '').trim();
-        const shortId = rawId.replace('http://arxiv.org/abs/', '').replace('https://arxiv.org/abs/', '');
-        const title = (entry.querySelector('title')?.textContent || '').trim().replace(/\s+/g, ' ');
-        const summary = (entry.querySelector('summary')?.textContent || '').trim().replace(/\s+/g, ' ');
-        const authors = [...entry.querySelectorAll('author name')].map(a => a.textContent.trim()).join(', ');
-        const cats2 = [...entry.querySelectorAll('category')].map(c => c.getAttribute('term'));
-        const published = (entry.querySelector('published')?.textContent || '').trim().slice(0, 10);
-
-        const paper = { shortId, title, summary, authors, categories: cats2, published };
-        const encoded = encodeURIComponent(JSON.stringify(paper));
-
-        const div = document.createElement('div');
-        div.className = 'paper-item';
-        div.style.animationDelay = `${i * 20}ms`;
-        div.innerHTML = `
-          <div class="paper-meta">
-            <span class="paper-id">${shortId}</span>
-            <span class="paper-date">${published}</span>
-            <div>${cats2.slice(0,3).map(c => `<span class="cat-tag">${c}</span>`).join(' ')}</div>
-          </div>
-          <div class="paper-title" onclick="openModal('${encoded}')">${title}</div>
-          <div class="paper-title-ja loading" id="ja-${shortId.replace(/[^a-z0-9]/gi,'_')}">
-            <span class="ja-badge">JA</span>
-            <span class="ja-text">翻訳中...</span>
-          </div>
-          <div class="paper-authors">${authors || '著者情報なし'}</div>
-          <div class="paper-links">
-            <a class="paper-link" href="https://arxiv.org/abs/${shortId}" target="_blank">Abstract ↗</a>
-            <a class="paper-link" href="https://arxiv.org/pdf/${shortId}" target="_blank">PDF ↗</a>
-            <button class="btn-outline" onclick="openModal('${encoded}')">詳細・AI解析 →</button>
-          </div>
-        `;
-        list.appendChild(div);
-
-        // APIキー不要で常にタイトル翻訳を実行
-        translateTitle(shortId, title);
-      });
+      allPapers.forEach((paper, i) => renderPaper(paper, i));
 
     } catch (e) {
       statusBar.innerHTML = `<span class="error-msg">エラー: ${e.message}</span>`;
-      list.innerHTML = `<div class="empty-state"><span class="big">!</span><span>取得に失敗しました。ネットワーク環境をご確認ください。</span></div>`;
+      list.innerHTML = `<div class="empty-state"><span class="big">!</span><span>取得に失敗しました。</span></div>`;
     }
 
     btn.disabled = false;
@@ -660,14 +864,14 @@
 
     document.getElementById('modalTitle').textContent = p.title;
     document.getElementById('modalMeta').innerHTML = `
-      <span>${p.shortId}</span>
+      <span>${p.source}</span>
       <span>${p.published}</span>
-      <span>${p.authors}</span>
+      <span>${p.authors || '著者情報なし'}</span>
       <span>${p.categories.join(' · ')}</span>
     `;
-    document.getElementById('modalAbstract').textContent = p.summary;
-    document.getElementById('modalAbsLink').href = `https://arxiv.org/abs/${p.shortId}`;
-    document.getElementById('modalPdfLink').href = `https://arxiv.org/pdf/${p.shortId}`;
+    document.getElementById('modalAbstract').textContent = p.summary || '（アブストラクトなし）';
+    document.getElementById('modalAbsLink').href = p.absUrl;
+    document.getElementById('modalPdfLink').href = p.pdfUrl;
 
     document.getElementById('translateContent').innerHTML = '<span style="opacity:0.3;">「翻訳する」を押すとアブストラクトを日本語に翻訳します（無料・キー不要）</span>';
     document.getElementById('translateBtn').disabled = false;
@@ -689,7 +893,7 @@
 
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-  // ── タイトル日本語翻訳（MyMemory無料API・キー不要）──
+  // ── タイトル翻訳キュー（MyMemory）──
   const translateQueue = [];
   let isTranslating = false;
 
@@ -704,7 +908,6 @@
     const { shortId, title } = translateQueue.shift();
     const elId = `ja-${shortId.replace(/[^a-z0-9]/gi,'_')}`;
     const el = document.getElementById(elId);
-
     try {
       const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(title)}&langpair=en|ja`;
       const res = await fetch(url);
@@ -719,19 +922,16 @@
     } catch {
       if (el) el.style.display = 'none';
     }
-
-    // 0.3秒待ってから次を処理
     await new Promise(r => setTimeout(r, 300));
     processTranslateQueue();
   }
 
-  // ── MyMemory翻訳（共通関数）──
+  // ── アブストラクト翻訳（MyMemory）──
   async function myMemoryTranslate(text) {
+    if (!text) return '';
     const chunkSize = 400;
     const chunks = [];
-    for (let i = 0; i < text.length; i += chunkSize) {
-      chunks.push(text.slice(i, i + chunkSize));
-    }
+    for (let i = 0; i < text.length; i += chunkSize) chunks.push(text.slice(i, i + chunkSize));
     const results = [];
     for (const chunk of chunks) {
       const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(chunk)}&langpair=en|ja`;
@@ -745,7 +945,6 @@
     return results.join('');
   }
 
-  // ── アブストラクト翻訳 ──
   async function runTranslate() {
     if (!currentPaper) return;
     const btn = document.getElementById('translateBtn');
@@ -756,7 +955,7 @@
     try {
       const result = await myMemoryTranslate(currentPaper.summary);
       box.className = 'ai-content';
-      box.textContent = result;
+      box.textContent = result || '（翻訳できませんでした）';
     } catch (e) {
       box.className = 'ai-content';
       box.innerHTML = `<span class="error-msg">エラー: ${e.message}</span>`;
@@ -766,9 +965,7 @@
 
   // ── Gemini APIキー管理 ──
   let geminiApiKey = sessionStorage.getItem('geminiApiKey') || '';
-  if (geminiApiKey) {
-    document.getElementById('geminiKeyStatus').textContent = '✓ 設定済み';
-  }
+  if (geminiApiKey) document.getElementById('geminiKeyStatus').textContent = '✓ 設定済み';
 
   function saveGeminiKey() {
     const val = document.getElementById('geminiKeyInput').value.trim();
@@ -795,11 +992,8 @@
       const prompt = `以下の論文について、日本語で要点を整理してください。\n\n【タイトル】${currentPaper.title}\n【アブストラクト】${currentPaper.summary}\n\n以下の3つの観点で、それぞれ2〜3文で簡潔にまとめてください。出力は以下の形式のみ（前置き不要）：\n\n■ この研究が解決しようとしている問題\n（ここに記述）\n\n■ 提案手法・アプローチ\n（ここに記述）\n\n■ 主な成果・貢献\n（ここに記述）`;
       const res = await fetch(
         `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=${geminiApiKey}`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
-        }
+        { method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] }) }
       );
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));
